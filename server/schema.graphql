@@ -1,0 +1,53 @@
+scalar DateTime
+
+type Query {
+  projects(query: String!): [ID]
+  project(id: ID!): Project
+  user(query: String!): User
+}
+
+type Mutation {
+  createProject(name: String!): Project!,
+  deleteProject(query: String!): String,
+  deleteProjects: String
+}
+
+type Subscription {
+  project: ProjectSubscriptionPayload!,
+}
+
+
+type User {
+  id: ID!
+  name: String!
+  projects: [ID]
+}
+
+type Project {
+  id: ID!
+  name: String!
+  assignments: [ID]
+  links: [ID]
+}
+
+type Assignment {
+  id: ID!
+  name: String!
+  deadline: DateTime
+  record: [{
+		startAt: DateTime,
+		duration: Int
+	}]
+  status: Int
+}
+
+enum MutationType {
+  CREATED
+  UPDATED
+  DELETED
+}
+
+type ProjectSubscriptionPayload {
+  mutation: MutationType!
+  data: Project
+}
