@@ -1,17 +1,37 @@
-const Message = require('../models/message')
+const User = require('../models/user')
+const Project = require('../models/project')
+const Assignment = require('../models/assignment')
+
 const Query = {
-  async messages(parent, args, content, info) {
-    // if (!args.query) {
-    //   // return await Message.find({})
-    // } else {
-      var result = await Message.find({
-        $or: [
-          { from: args.query }, { to: args.query }
-        ]
+  async user(parent, args, content, info) {
+    //args: {name}
+    var result = await User.find({
+      name: args.name
+    })
+    return result
+  },
+  async project(parent, args, content, info) {
+    // args: {id}
+    var result = await Project.find({
+      id: args.id
+    })
+    return result
+  },
+  async userProject(parent, args, content, info) {
+    // args: {userName, projectName}
+    var userInfo = await User.find({
+      name: args.name
+    })
+    var projectsArr = []
+    userInfo.projects.forEach(projID => {
+      var project = await Project.findById(projID)
+      project.assignments.forEach(assignID => {
+        var assign = await Assignment.findById(assignID)
+        
       })
-      return result
-    // }
-  }
+    });
+    return projectsArr
+  },
 }
 
 module.exports = Query

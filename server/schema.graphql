@@ -1,38 +1,78 @@
 scalar DateTime
 
 type Query {
-  projects(query: String!): [ID]
+  user(userName: String!): User
   project(id: ID!): Project
-  user(query: String!): User
+  assignment(id: ID!): Assignment
+  userProject(userName: String! projectName: String!): [Project]
+  statsProject(projectName: String!): [Int]
+  statsAssignment(assignmentName: String!): [Int]
 }
 
 type Mutation {
-  createProject(name: String!): Project!,
-  deleteProject(query: String!): String,
-  deleteProjects: String
+  createUser(data: CreateUserInput): User!
+  deleteUser(id: ID!): User!
+  createProject(data: CreateProjectInput): Project!,
+  deleteProject(id: ID!): Project!,
+  updateProject(id: ID!, data: UpdateProjectInput)
+  createAssignment(data: CreateAssignmentInput): Assignment!
+  deleteAssignment(id: ID!): Assignment!
+  updateAssignment(id: ID!, data: updateAssignmentInput)
 }
 
 type Subscription {
   project: ProjectSubscriptionPayload!,
 }
 
+input CreateUserInput {
+  userName: String!
+}
+
+input CreateProjectInput {
+  userName: String!
+  projectName: String!
+  links: [String]
+}
+
+input UpdateProjectInput {
+  userName: String
+  projectName: String
+  links: [String]
+}
+
+input CreateAssignmentInput {
+  assignmentName: String!
+  deadline: DateTime
+  status: Int
+}
+
+input updateAssignmentInput {
+  assignmentName: String
+  deadline: DateTime
+  record: [{
+    startAt: DateTime,
+    duration: Int
+  }]
+  status: Int
+}
+
 
 type User {
   id: ID!
-  name: String!
-  projects: [ID]
+  userName: String!
+  projects: [Project]
 }
 
 type Project {
   id: ID!
-  name: String!
-  assignments: [ID]
-  links: [ID]
+  projectName: String!
+  assignments: [Assignment]
+  links: [String]
 }
 
 type Assignment {
   id: ID!
-  name: String!
+  assignmentName: String!
   deadline: DateTime
   record: [{
 		startAt: DateTime,
@@ -49,5 +89,10 @@ enum MutationType {
 
 type ProjectSubscriptionPayload {
   mutation: MutationType!
-  data: Project
+  data: Project!
+}
+
+type AssignmentSubscriptionPayload {
+  mutation: MutationType!
+  data: Assignment!
 }
