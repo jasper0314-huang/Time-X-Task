@@ -4,9 +4,9 @@ type Query {
   user(userName: String!): User
   project(id: ID!): Project
   assignment(id: ID!): Assignment
-  userProject(userName: String! projectName: String!): [Project]
-  statsProject(projectName: String!): [Int]
-  statsAssignment(assignmentName: String!): [Int]
+  userProject(userName: String! projectName: String!): [Project] # data for the bubble expansion
+  statsProject(projectName: String!): [Int] # time (sec) per user 
+  statsAssignment(assignmentName: String!): [Int] # time (sec) per user
 }
 
 type Mutation {
@@ -22,6 +22,7 @@ type Mutation {
 
 type Subscription {
   project: ProjectSubscriptionPayload!,
+  assignment: AssignmentSubscriptionPayload!
 }
 
 input CreateUserInput {
