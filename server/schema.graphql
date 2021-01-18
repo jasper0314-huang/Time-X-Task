@@ -10,52 +10,52 @@ type Query {
 }
 
 type Mutation {
-  createUser(data: CreateUserInput): User!
-  deleteUser(id: ID!): User!
-  createProject(data: CreateProjectInput): Project!,
-  deleteProject(id: ID!): Project!,
-  updateProject(id: ID!, data: UpdateProjectInput)
-  createAssignment(data: CreateAssignmentInput): Assignment!
-  deleteAssignment(id: ID!): Assignment!
-  updateAssignment(id: ID!, data: updateAssignmentInput)
+  createUser(data: CreateUserInput): User
+  # deleteUser(id: ID!): User!
+  # createProject(data: CreateProjectInput): Project!
+  # deleteProject(id: ID!): Project!
+  # updateProject(id: ID!, data: UpdateProjectInput): Project
+  # createAssignment(data: CreateAssignmentInput): Assignment!
+  # deleteAssignment(id: ID!): Assignment!
+  # updateAssignment(id: ID!, data: updateAssignmentInput): Assignment
 }
 
-type Subscription {
-  project: ProjectSubscriptionPayload!,
-  assignment: AssignmentSubscriptionPayload!
-}
+# type Subscription {
+#   project: ProjectSubscriptionPayload!,
+#   assignment: AssignmentSubscriptionPayload!
+# }
 
 input CreateUserInput {
   userName: String!
 }
 
-input CreateProjectInput {
-  userName: String!
-  projectName: String!
-  links: [String]
-}
+# input CreateProjectInput {
+#   userName: String!
+#   projectName: String!
+#   links: [String]
+# }
 
-input UpdateProjectInput {
-  userName: String
-  projectName: String
-  links: [String]
-}
+# input UpdateProjectInput {
+#   userName: String
+#   projectName: String
+#   links: [String]
+# }
 
-input CreateAssignmentInput {
-  assignmentName: String!
-  deadline: DateTime
-  status: Int
-}
+# input CreateAssignmentInput {
+#   assignmentName: String!
+#   deadline: DateTime
+#   status: Int
+# }
 
-input updateAssignmentInput {
-  assignmentName: String
-  deadline: DateTime
-  record: [{
-    startAt: DateTime,
-    duration: Int
-  }]
-  status: Int
-}
+# input updateAssignmentInput {
+#   assignmentName: String
+#   deadline: DateTime
+#   record: [{
+#     startAt: DateTime,
+#     duration: Int
+#   }]
+#   status: Int
+# }
 
 
 type User {
@@ -75,11 +75,13 @@ type Assignment {
   id: ID!
   assignmentName: String!
   deadline: DateTime
-  record: [{
-		startAt: DateTime,
-		duration: Int
-	}]
+  record: [TimeRecord]
   status: Int
+}
+
+type TimeRecord {
+  startAt: DateTime
+  duration: Int
 }
 
 enum MutationType {
@@ -88,12 +90,12 @@ enum MutationType {
   DELETED
 }
 
-type ProjectSubscriptionPayload {
-  mutation: MutationType!
-  data: Project!
-}
+# type ProjectSubscriptionPayload {
+#   mutation: MutationType!
+#   data: Project!
+# }
 
-type AssignmentSubscriptionPayload {
-  mutation: MutationType!
-  data: Assignment!
-}
+# type AssignmentSubscriptionPayload {
+#   mutation: MutationType!
+#   data: Assignment!
+# }

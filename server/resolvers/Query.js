@@ -23,9 +23,9 @@ const Query = {
       name: args.name
     })
     var projectsArr = []
-    userInfo.projects.forEach(projID => {
+    userInfo.projects.forEach(async projID => {
       var project = await Project.findById(projID)
-      project.assignments.forEach(assignID => {
+      project.assignments.forEach(async assignID => {
         var assign = await Assignment.findById(assignID)
         
       })

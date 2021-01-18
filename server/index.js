@@ -11,8 +11,8 @@ const server = new GraphQLServer({
   typeDefs: './server/schema.graphql',
   resolvers: {
     Query,
-    Mutation,
-    Subscription
+    // Mutation,
+    // Subscription
   },
   context: pubsub
 
