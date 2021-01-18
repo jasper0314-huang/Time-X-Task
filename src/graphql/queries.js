@@ -14,11 +14,13 @@ import { gql } from 'apollo-boost'
 //   }
 // `
 export const USER_PROJECTS_QUERY = gql`
-  query User(
-      $userName: String!
+  query user(
+      $userName: String
+      $id: ID
     ) {
-      User(
+      user(
         userName: $userName
+        id: $ID
       ) {
         id
         projects {

@@ -19,10 +19,10 @@ function App() {
 
   // const bodyRef = useRef(null)
   // const bodyRef2 = useRef(null)
-
+  var userName = "Tong";
   const { loading, error, data, subscribeToMore } = useQuery(USER_PROJECTS_QUERY, {
     variables: { userName: userName }
-  })
+  });
   // const [addMessage] = useMutation(CREATE_MESSAGE_MUTATION)
 
   // useEffect(() => {
@@ -61,6 +61,8 @@ function App() {
   //   console.log("nothing happen");
   // }
   const tmp = () => {
+    console.log(loading);
+    console.log(error);
     console.log(data);
     console.log("nothing happen");
   }

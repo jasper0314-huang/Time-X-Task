@@ -14,12 +14,12 @@ import * as serviceWorker from './serviceWorker'
 
 // Create an http link:
 const httpLink = new HttpLink({
-  uri: 'http://localhost:4100/'
+  uri: 'http://localhost:4200/'
 })
 
 // Create a WebSocket link:
 const wsLink = new WebSocketLink({
-  uri: `ws://localhost:4100/`,
+  uri: `ws://localhost:4200/`,
   options: { reconnect: true }
 })
 
