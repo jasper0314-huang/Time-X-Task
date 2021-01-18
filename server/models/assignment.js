@@ -3,7 +3,7 @@ const Schema = mongoose.Schema
 
 // Creating a schema, sort of like working with an ORM
 const AssignmentSchema = new Schema({
-	name: {
+	assignmentName: {
 		type: String,
 		required: [true, 'name field is required.']
 	},

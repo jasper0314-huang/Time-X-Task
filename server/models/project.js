@@ -3,7 +3,7 @@ const Schema = mongoose.Schema
 
 // Creating a schema, sort of like working with an ORM
 const ProjectSchema = new Schema({
-	name: {
+	projectName: {
 		type: String,
 		required: [true, 'Title field is required.']
 	},

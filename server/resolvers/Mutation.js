@@ -3,11 +3,9 @@ const Project = require('../models/project')
 const Assignment = require('../models/assignment')
 
 const Mutation = {
-    createUser: async (_, data, pubSub, info) => {
-    console.log("==============")
-    console.log(data.userName)
-    // const newUser = new User({ userName: data.userName });
-    // const error = await newUser.save();
+    createUser: async (_, {data}, pubSub, info) => {
+    const newUser = new User({ userName: data.userName });
+    const error = await newUser.save();
     // // pubSub.publish('message', {
     // //   message: {
     // //     mutation: "CREATED",
@@ -15,8 +13,8 @@ const Mutation = {
     // //   }
     // // })
 
-    // if (error) return error
-    // return newUser;
+    if (error) return error
+    return newUser;
   }
 //   deleteMessage: async (_, { query }, pubSub, info) => {
 //     await Message.deleteMany({

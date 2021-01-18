@@ -3,7 +3,7 @@ const Schema = mongoose.Schema
 
 // Creating a schema, sort of like working with an ORM
 const UserSchema = new Schema({
-	name: {
+	userName: {
 		type: String,
 		required: [true, 'Name field is required.']
 	},

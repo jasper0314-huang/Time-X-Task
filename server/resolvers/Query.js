@@ -5,9 +5,20 @@ const Assignment = require('../models/assignment')
 const Query = {
   async user(parent, args, content, info) {
     //args: {name}
-    var result = await User.find({
-      name: args.name
-    })
+    console.log("==========");
+    console.log(args);
+    console.log("==========");
+    var result;
+    if (args.id)  {
+      result = await User.findById(args.id)
+    } else {
+      result = await User.find({
+        userName: args.userName
+      })
+    }
+    console.log(result);
+    console.log("==========");
+
     return result
   },
   async project(parent, args, content, info) {
@@ -20,7 +31,7 @@ const Query = {
   async userProject(parent, args, content, info) {
     // args: {userName, projectName}
     var userInfo = await User.find({
-      name: args.name
+      userName: args.name
     })
     var projectsArr = []
     userInfo.projects.forEach(async projID => {
