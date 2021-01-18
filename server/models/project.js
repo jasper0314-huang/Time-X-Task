@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
+const Assignment = require('./assignment')
 
 // Creating a schema, sort of like working with an ORM
 const ProjectSchema = new Schema({
@@ -7,7 +8,7 @@ const ProjectSchema = new Schema({
 		type: String,
 		required: [true, 'Title field is required.']
 	},
-	assignments: [Schema.Types.ObjectId],
+	assignments: [Assignment],
 	links: [String]
 
 })

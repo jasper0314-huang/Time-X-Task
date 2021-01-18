@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
+const Project = require('./project')
 
 // Creating a schema, sort of like working with an ORM
 const UserSchema = new Schema({
@@ -8,7 +9,7 @@ const UserSchema = new Schema({
 		required: [true, 'Name field is required.']
 	},
 	projects: [
-		Schema.Types.ObjectId
+		Project
 	],
 })
 
