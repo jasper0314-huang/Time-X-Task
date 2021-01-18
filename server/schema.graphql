@@ -13,10 +13,10 @@ type Mutation {
   createUser(data: CreateUserInput): User!
   deleteUser(userName: String): String
   createProject(data: CreateProjectInput): Project!
-  deleteProject(id: ID!): Project!
+  deleteProject(id: ID): String
   # updateProject(id: ID!, data: UpdateProjectInput): Project
-  # createAssignment(data: CreateAssignmentInput): Assignment!
-  # deleteAssignment(id: ID!): Assignment!
+  createAssignment(data: CreateAssignmentInput): Assignment!
+  deleteAssignment(id: ID): String
   # updateAssignment(id: ID!, data: updateAssignmentInput): Assignment
 }
 
@@ -30,7 +30,7 @@ input CreateUserInput {
 }
 
 input CreateProjectInput {
-  userName: String!
+  userid: ID!
   projectName: String!
   links: [String]
 }
@@ -41,11 +41,13 @@ input CreateProjectInput {
 #   links: [String]
 # }
 
-# input CreateAssignmentInput {
-#   assignmentName: String!
-#   deadline: DateTime
-#   status: Int
-# }
+input CreateAssignmentInput {
+  userid: ID!
+  projectid: ID!
+  assignmentName: String!
+  deadline: DateTime
+  isComplete: Int
+}
 
 # input updateAssignmentInput {
 #   assignmentName: String

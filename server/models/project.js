@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 const Assignment = require('./assignment')
+var AssignmentSchema = mongoose.model('assignment').schema
 
 // Creating a schema, sort of like working with an ORM
 const ProjectSchema = new Schema({
@@ -8,10 +9,22 @@ const ProjectSchema = new Schema({
 		type: String,
 		required: [true, 'Title field is required.']
 	},
-	assignments: [Assignment],
+	assignments: [{
+		type: AssignmentSchema,
+		ref: 'assignment'
+	}],
 	links: [String]
-
 })
+
+// ProjectSchema.pre('update',function(next) {
+//     this.model('user').update(
+//         { },
+//         { "$pull": { "projects": this } },
+//         { "multi": true },
+//         next
+//     );
+// })
+
 
 // Creating a table within database with the defined schema
 const Project = mongoose.model('project', ProjectSchema)

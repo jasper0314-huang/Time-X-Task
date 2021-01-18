@@ -9,7 +9,7 @@ const AssignmentSchema = new Schema({
 	},
 	deadline: {
 		type: Date,
-		required: [true, 'deadline field is required.']
+		// required: [true, 'deadline field is required.']
 	},
 	record: [{
 		startAt: Date,

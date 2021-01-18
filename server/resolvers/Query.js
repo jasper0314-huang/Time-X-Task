@@ -18,7 +18,7 @@ const Query = {
   async project(parent, args, content, info) {
     // args: {id}
     var result = await Project.findOne({
-      id: args.id
+      _id: args.id
     })
     return result
   },
