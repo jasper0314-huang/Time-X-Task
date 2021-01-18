@@ -1,7 +1,7 @@
 scalar DateTime
 
 type Query {
-  user(userName: String! id: ID): User
+  user(userName: String id: ID): User
   project(id: ID!): Project
   assignment(id: ID!): Assignment
   userProject(userName: String! projectName: String!): [Project] # data for the bubble expansion
@@ -10,10 +10,10 @@ type Query {
 }
 
 type Mutation {
-  createUser(data: CreateUserInput): User
-  # deleteUser(id: ID!): User!
-  # createProject(data: CreateProjectInput): Project!
-  # deleteProject(id: ID!): Project!
+  createUser(data: CreateUserInput): User!
+  deleteUser(userName: String): String
+  createProject(data: CreateProjectInput): Project!
+  deleteProject(id: ID!): Project!
   # updateProject(id: ID!, data: UpdateProjectInput): Project
   # createAssignment(data: CreateAssignmentInput): Assignment!
   # deleteAssignment(id: ID!): Assignment!
@@ -29,11 +29,11 @@ input CreateUserInput {
   userName: String!
 }
 
-# input CreateProjectInput {
-#   userName: String!
-#   projectName: String!
-#   links: [String]
-# }
+input CreateProjectInput {
+  userName: String!
+  projectName: String!
+  links: [String]
+}
 
 # input UpdateProjectInput {
 #   userName: String
