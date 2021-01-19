@@ -1,7 +1,7 @@
 scalar DateTime
 
 type Query {
-  user(userName: String id: ID): User
+  user(userName: String id: ID): User # must given one
   project(id: ID!): Project
   assignment(id: ID!): Assignment
   userProject(userName: String! projectName: String!): [Project] # data for the bubble expansion
@@ -18,7 +18,7 @@ type Mutation {
   # updateProject(id: ID!, data: UpdateProjectInput): Project
   createAssignment(data: CreateAssignmentInput): Assignment!
   deleteAssignment(id: ID): String
-  # updateAssignment(id: ID!, data: updateAssignmentInput): Assignment
+  # updateAssignment(id: ID!, data: UpdateAssignmentInput): Assignment
 }
 
 # type Subscription {
@@ -31,7 +31,7 @@ input CreateUserInput {
 }
 
 input CreateProjectInput {
-  userid: ID!
+  userID: ID!
   projectName: String!
   links: [String]
 }
@@ -43,11 +43,11 @@ input CreateProjectInput {
 # }
 
 input CreateAssignmentInput {
-  userid: ID!
-  projectid: ID!
+  userID: ID!
+  projectID: ID!
   assignmentName: String!
   deadline: DateTime
-  isComplete: Int
+  isComplete: Boolean
 }
 
 # input updateAssignmentInput {
@@ -59,7 +59,6 @@ input CreateAssignmentInput {
 #   }]
 #   status: Int
 # }
-
 
 type User {
   id: ID!
@@ -80,6 +79,7 @@ type Assignment {
   deadline: DateTime
   record: [TimeRecord]
   status: Int
+  isComplete: Boolean
 }
 
 type TimeRecord {

@@ -31,7 +31,7 @@ const Mutation = {
     const newProject = new Project({ projectName: data.projectName });
     const error = await newProject.save();
     await User.updateOne(
-      { _id: data.userid },
+      { _id: data.userID },
       { $push: { projects: newProject } }
     )
     return newProject;
@@ -39,7 +39,7 @@ const Mutation = {
   deleteProject: async (_, { id }, pubSub, info) => {
     if (id) {
       await Project.deleteOne({
-        id: id
+        _id: id
       });
       await User.updateMany(
         {},
@@ -48,12 +48,13 @@ const Mutation = {
       return `delete project id: ${id}`
 
     } else {
-      await Project.deleteMany();
-      await User.updateMany(
-        {},
-        { $set: { "projects": [] } }
-      )
-      return `Delete all Projects`
+      // await Project.deleteMany();
+      // await User.updateMany(
+      //   {},
+      //   { $set: { "projects": [] } }
+      // )
+      // return `Delete all Projects`
+      return `No projectID input`
     }
   },
   createAssignment: async (_, { data }, pubSub, info) => {
@@ -64,20 +65,36 @@ const Mutation = {
     //   { $push: { projects: newAssignment } }
     // )
     await Project.updateOne(
-      { _id: data.projectid },
+      { _id: data.projectID },
       { $push: { "assignments": newAssignment } }
+    )
+    
+    await User.updateOne(
+      { _id: data.userID, "projects._id": data.projectID },
+      { $push: {
+        "projects.$.assignments": newAssignment
+      } } 
+      // { $push: { "projects": { "assignments": newAssignment } } }
     )
     return newAssignment;
   },
   deleteAssignment: async (_, { id }, pubSub, info) => {
     if (id) {
       await Assignment.deleteOne({
-        id: id
+        _id: id
       })
+      await User.updateMany(
+        {},
+        { "$pull": { "projects.$[].assignments": {"_id": id} } }
+      )
+      await Project.updateMany(
+        {},
+        { "$pull": { "assignments": {"_id": id} } }
+      )
       return `delete assignment id: ${id}`
     } else {
-      await Assignment.deleteMany();
-      return `Delete all Assignments`
+      // await Assignment.deleteMany();
+      return `No assignment id input`
     }
   }, // can't delete assignment since the time record should be preserve
 }

@@ -41,6 +41,13 @@ const Query = {
   async users(parent, args, content, info) {
     var result = await User.find();
     return result;
+  },
+  async assignment(parent, args, content, info) {
+    console.log(args);
+    var result = await Assignment.findOne({
+      _id: args.id
+    })
+    return result
   }
 }
 

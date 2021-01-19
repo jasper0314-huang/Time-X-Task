@@ -17,6 +17,9 @@ const AssignmentSchema = new Schema({
 	}],
 	status: {
 		type: Number
+	},
+	isComplete: {
+		type: Boolean
 	}
 })
 
