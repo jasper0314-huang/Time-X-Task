@@ -13,18 +13,11 @@ const ProjectSchema = new Schema({
 		type: AssignmentSchema,
 		ref: 'assignment'
 	}],
-	links: [String]
+	links: {
+		type: [String],
+		default: []
+	}
 })
-
-// ProjectSchema.pre('update',function(next) {
-//     this.model('user').update(
-//         { },
-//         { "$pull": { "projects": this } },
-//         { "multi": true },
-//         next
-//     );
-// })
-
 
 // Creating a table within database with the defined schema
 const Project = mongoose.model('project', ProjectSchema)

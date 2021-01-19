@@ -9,17 +9,24 @@ const AssignmentSchema = new Schema({
 	},
 	deadline: {
 		type: Date,
-		// required: [true, 'deadline field is required.']
 	},
-	record: [{
-		startAt: Date,
-		duration: Number
-	}],
+	record: {
+		type: [{
+			startAt: Date,
+			duration: {
+				type: Number,
+				default: 0
+			}
+		}],
+		default: []
+	},
 	status: {
-		type: Number
+		type: Number,
+		default: 0
 	},
 	isComplete: {
-		type: Boolean
+		type: Boolean,
+		default: false
 	}
 })
 

@@ -10,10 +10,13 @@ const UserSchema = new Schema({
 		required: [true, 'Name field is required.']
 	},
 	// projects: [ProjectSchema]
-	projects: [{
-		type: ProjectSchema,
-		ref: 'project'
-	}]
+	projects: {
+		type :[{
+			type: ProjectSchema,
+			ref: 'project'
+		}],
+		default: []
+	}
 })
 
 // Creating a table within database with the defined schema
