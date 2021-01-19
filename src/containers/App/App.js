@@ -20,8 +20,8 @@ function App() {
 
   // const bodyRef = useRef(null)
   // const bodyRef2 = useRef(null)
-  var userName = "Tong";
-  var id = "6005e1d35f8bc634807003c2";
+  var userName = "BadTong";
+  var id = "6006b1c1e511ba463040b9d6";
   const { loading, error, data, subscribeToMore } = useQuery(USER_QUERY, {
     variables: { userName, id}
   });
@@ -66,13 +66,22 @@ function App() {
   const tmp = () => {
     console.log(loading);
     console.log(error);
-    console.log(data);
+    console.log(data.user);
     console.log("nothing happen");
   }
   return (
     <div>
       <div>hi</div>
       <Button onClick={tmp} >Testing</Button>
+      <div>
+        {loading ? (<div></div>) : ( 
+          <div> 
+            <h1> { data.user.id } </h1>
+            <h1> { data.user.userName } </h1>
+            <h1> { data.user.projects } </h1> 
+          </div>
+        )}
+      </div>
     </div>
   //   <div className="App">
   //     <div className="App-title">

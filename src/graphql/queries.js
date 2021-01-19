@@ -29,11 +29,14 @@ const USER_QUERY = gql`
   ) {
       user(
         userName: $userName
-        id: $ID
+        id: $id
       ) {
         id
         userName
-        projects
+        projects {
+          id
+          projectName
+        }
       }
   }
 `
