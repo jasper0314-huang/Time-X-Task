@@ -1,18 +1,27 @@
 import { gql } from 'apollo-boost'
 
-// export const MESSAGES_QUERY = gql`
-//   query Messages(
-//       $user: String!
+// export const USER_PROJECTS_QUERY = gql`
+//   query user(
+//       $userName: String
+//       $id: ID
 //     ) {
-//       Messages(
-//         user: $user
+//       user(
+//         userName: $userName
+//         id: $ID
 //       ) {
-//         from
-//         to
-//         body
+//         id
+//         projects {
+//           id
+//           projectName
+//           assignments {
+//             id
+//             assignmentName
+//           }
+//         }
 //       }
 //   }
 // `
+
 export const USER_PROJECTS_QUERY = gql`
   query user(
       $userName: String
@@ -23,14 +32,6 @@ export const USER_PROJECTS_QUERY = gql`
         id: $ID
       ) {
         id
-        projects {
-          id
-          projectName
-          assignments {
-            id
-            assignmentName
-          }
-        }
       }
   }
 `

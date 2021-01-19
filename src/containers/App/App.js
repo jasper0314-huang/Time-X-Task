@@ -20,8 +20,9 @@ function App() {
   // const bodyRef = useRef(null)
   // const bodyRef2 = useRef(null)
   var userName = "Tong";
+  var id = "6005e1d35f8bc634807003c2";
   const { loading, error, data, subscribeToMore } = useQuery(USER_PROJECTS_QUERY, {
-    variables: { userName: userName }
+    variables: { userName: userName, id: id}
   });
   // const [addMessage] = useMutation(CREATE_MESSAGE_MUTATION)
 
@@ -61,9 +62,9 @@ function App() {
   //   console.log("nothing happen");
   // }
   const tmp = () => {
-    console.log(loading);
-    console.log(error);
-    console.log(data);
+    // console.log(loading);
+    // console.log(error);
+    // console.log(data);
     console.log("nothing happen");
   }
   return (
