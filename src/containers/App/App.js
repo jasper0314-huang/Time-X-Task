@@ -3,6 +3,9 @@ import { useQuery, useMutation } from '@apollo/react-hooks'
 import './App.css'
 import 'antd/dist/antd.css'; 
 import { Button, Input, Tag } from 'antd'
+import Pie from '../../components/Statistic/Pie';
+import MyHistogram from '../../components/Statistic/MyHistogram';
+
 
 
 import {
@@ -17,23 +20,29 @@ function App() {
   const { loading, error, data, subscribeToMore } = useQuery(USER_QUERY, {
     variables: variables
   });
+  const [changepage, setChangepage] = useState(true);
+  const [keyword, setKeyword] = useState('');
 
   const tmp = () => {
-    console.log(loading);
-    console.log(error);
-    console.log(data.user);
-    console.log("nothing happen");
+    setChangepage(!changepage);
   }
   return (
-    <div>
-      <div>hi</div>
-      <Button onClick={tmp} >Get User Data(in console)</Button>
+    <div className="App">
+      <Button onClick={tmp} >Switch</Button>
       <div>
-        {loading ? (<div></div>) : ( 
+        {loading ? (<div>Loading...</div>) : changepage ? ( 
           <div> 
-            <h1> userID: { data.user.id } </h1>
-            <h1> userName: { data.user.userName } </h1>
-            <h1> userProjects:{ data.user.projects[0].projectName } </h1> 
+            <Input
+              placeholder="What SECRET do you want to know?"
+              value={keyword}
+              onChange={(e) => setKeyword(e.target.value)}
+              style={{ marginBottom: 10 }}
+            ></Input>
+            <MyHistogram data={ data } />
+          </div>
+        ) : (
+          <div>
+            <Pie />
           </div>
         )}
       </div>
