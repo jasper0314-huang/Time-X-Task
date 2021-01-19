@@ -1,6 +1,7 @@
 const User = require('../models/user')
 const Project = require('../models/project')
-const Assignment = require('../models/assignment')
+const Assignment = require('../models/assignment');
+const { useSubscription } = require('@apollo/react-hooks');
 
 const Query = {
   async user(parent, args, content, info) {
@@ -22,21 +23,25 @@ const Query = {
     })
     return result
   },
-  async userProject(parent, args, content, info) {
-    // args: {userName, projectName}
-    var userInfo = await User.findOne({
-      userName: args.userName
-    })
-    var projectsArr = []
-    userInfo.projects.forEach(async projID => {
-      var project = await Project.findById(projID)
-      project.assignments.forEach(async assignID => {
-        var assign = await Assignment.findById(assignID)
+  // async userProject(parent, args, content, info) {
+  //   // args: {userName, projectName}
+  //   var userInfo = await User.findOne({
+  //     userName: args.userName
+  //   })
+  //   var projectsArr = []
+  //   userInfo.projects.forEach(async projID => {
+  //     var project = await Project.findById(projID)
+  //     project.assignments.forEach(async assignID => {
+  //       var assign = await Assignment.findById(assignID)
         
-      })
-    });
-    return projectsArr
-  },
+  //     })
+  //   });
+  //   return projectsArr
+  // },
+  async users(parent, args, content, info) {
+    var result = await User.find();
+    return result;
+  }
 }
 
 module.exports = Query

@@ -6,7 +6,8 @@ import { Button, Input, Tag } from 'antd'
 
 
 import {
-  USER_PROJECTS_QUERY,
+  USER_QUERY,
+  USERS_QUERY,
   // CREATE_MESSAGE_MUTATION,
   // DELETE_MESSAGE_MUTATION,
   // MESSAGES_SUBSCRIPTION
@@ -21,9 +22,10 @@ function App() {
   // const bodyRef2 = useRef(null)
   var userName = "Tong";
   var id = "6005e1d35f8bc634807003c2";
-  const { loading, error, data, subscribeToMore } = useQuery(USER_PROJECTS_QUERY, {
-    variables: { userName: userName, id: id}
+  const { loading, error, data, subscribeToMore } = useQuery(USER_QUERY, {
+    variables: { userName, id}
   });
+  // const { loading, error, data, subscribeToMore } = useQuery(USERS_QUERY);
   // const [addMessage] = useMutation(CREATE_MESSAGE_MUTATION)
 
   // useEffect(() => {
@@ -62,9 +64,9 @@ function App() {
   //   console.log("nothing happen");
   // }
   const tmp = () => {
-    // console.log(loading);
-    // console.log(error);
-    // console.log(data);
+    console.log(loading);
+    console.log(error);
+    console.log(data);
     console.log("nothing happen");
   }
   return (

@@ -7,6 +7,7 @@ type Query {
   userProject(userName: String! projectName: String!): [Project] # data for the bubble expansion
   statsProject(projectName: String!): [Int] # time (sec) per user 
   statsAssignment(assignmentName: String!): [Int] # time (sec) per user
+  users: [User]
 }
 
 type Mutation {
