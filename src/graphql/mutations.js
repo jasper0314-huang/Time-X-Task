@@ -3,31 +3,25 @@ import { gql } from 'apollo-boost'
 const CREATE_ASSIGNMENT_MUTATION = gql`
   mutation createAssignment(
     $userID: ID!
-    $projectID: ID!
-    $assignmentName: String!
+    $data: CreateAssignmentInput
   ) {
-    createAssignment(data: {
+    createAssignment(
       userID: $userID
-      projectID: $projectID
-      assignmentName: $assignmentName
-    }) {
+      data: $data
+    ) {
       assignmentName
     }
   }
 `
 
-// input UpdateAssignmentInput {
-//   assignmentName: String
-//   deadline: DateTime
-//   status: Int
-//   isComplete: Boolean
-// }
 const UPDATE_ASSIGNMENT_MUTATION = gql`
   mutation updateAssignment(
+    $userID: ID!
     $assignmentID: ID!
     $data: UpdateAssignmentInput
   ) {
     updateAssignment(
+      userID: $userID
       id: $assignmentID
       data: $data
     ) {
@@ -38,9 +32,13 @@ const UPDATE_ASSIGNMENT_MUTATION = gql`
 
 const DELETE_ASSIGNMENT_MUTATION = gql`
   mutation deleteAssignment(
+    $userID: ID!
     $assignmentID: ID!
   ) {
-    deleteAssignment(id: $assignmentID)
+    deleteAssignment(
+      userID: $userID
+      id: $assignmentID
+    )
   }
 `
 export { 

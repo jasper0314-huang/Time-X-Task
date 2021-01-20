@@ -1,13 +1,38 @@
-* {
+/* * {
     box-sizing: border-box;
-}
+} */
 
 input[type='checkbox'] {
     visibility: hidden;
 }
 
-.todo-app__main {
+.calendar__box {
+    width: 40%;
+    position: relative;
+}
+
+.react-calendar {
+    position: absolute;
+    right: 0px;
     width: 100%;
+    height: 100%;
+    font-size: 18px
+}
+
+.todolist__main {
+    display: flex;
+    flex-direction: row;
+}
+
+.todo-app_box {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.todo-app__input__box {
+    display: flex;
+    flex-direction: row;
 }
 
 .todo-app__input {
@@ -18,7 +43,6 @@ input[type='checkbox'] {
     font-size: 18px;
     font-weight: 200;
     line-height: 1.4em;
-    width: 100%;
     height: 50px;
     background: rgb(254, 254, 254);
     box-shadow: inset 0px 0px 10px 2px rgba(0, 0, 0, 0.048);
@@ -33,6 +57,23 @@ input[type='checkbox'] {
     font-weight: 100;
     opacity: 0.6;
 }
+
+#todo-input-assignment {
+    width: 50%;
+}
+
+#todo-app__form {
+    width: 50%;
+}
+
+#todo-input-deadline {
+    width: 44%;
+}
+
+#todo-input-clocktime {
+    width: 44%;
+}
+
 
 .todo-app__main {
     background: rgb(254, 254, 254);

@@ -19,7 +19,7 @@ const USER_QUERY = gql`
               id
               assignmentName
               deadline
-              record {
+              records {
                 startAt
                 duration
               }
