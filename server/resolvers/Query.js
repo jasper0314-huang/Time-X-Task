@@ -56,7 +56,7 @@ const Query = {
   },
   async project(parent, args, content, info) {
     // args: {id}
-    var projectRet = await (await Project.findOne({ _id: args.id })).populate({
+    var projectRet = await Project.findOne({ _id: args.id }).populate({
       path: 'assignments',
       model: 'assignment',
       populate: {
