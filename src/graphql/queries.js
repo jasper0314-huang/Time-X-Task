@@ -31,4 +31,13 @@ const USER_QUERY = gql`
   }
 `
 
-export { USER_QUERY };
+const PROJECTNAMES_QUERY = gql`
+  query {
+    projectNames {
+      name
+      count
+    }
+  }
+`
+
+export { USER_QUERY, PROJECTNAMES_QUERY};

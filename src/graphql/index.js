@@ -1,4 +1,7 @@
-export { USER_QUERY } from './queries'
+export { 
+    USER_QUERY,
+    PROJECTNAMES_QUERY
+} from './queries'
 export { 
     CREATE_ASSIGNMENT_MUTATION, 
     UPDATE_ASSIGNMENT_MUTATION, 
