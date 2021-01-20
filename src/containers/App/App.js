@@ -47,7 +47,7 @@ function App() {
     {
       (user === "" || data.user === null)? (
         <div className="Logging">
-          <label for="logging">User Name:</label>
+          <Tag for="logging">User Name:</Tag>
           <input type="text" id="logging" name="logging" />
           <input type="submit" value="Submit" onClick={checkLogging} />
         </div>
