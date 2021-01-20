@@ -55,7 +55,8 @@ const Time = (props) => {
             props.hint(time.getSeconds());
             setText(getValidDisplayTime(time.getHours(), time.getMinutes(), time.getSeconds()));
         }, 1000);
-        setIdInterval(id)
+        setIdInterval(id);
+        props.setintervalId(id);
     };
 
     const startTimer = () => {
