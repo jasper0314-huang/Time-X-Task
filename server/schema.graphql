@@ -5,8 +5,8 @@ type Query {
   project(id: ID!): Project
   assignment(id: ID!): Assignment
   userProject(userName: String! projectName: String!): [Project] # data for the bubble expansion
-  projectNames: [{ String Int}]
-  assignmentNames(projectName: String): [String] # when no given projectName, return all projectNames
+  projectNames: [SubjectCount]
+  assignmentNames(projectName: String): [SubjectCount] # when no given projectName, return all projectNames
   searchStats(projectName: String! assignmentName: String): [Int]
   users: [User]
 }
@@ -130,6 +130,11 @@ type Assignment {
 type Record {
   startAt: DateTime
   duration: Int
+}
+
+type SubjectCount {
+  name: String
+  count: Int
 }
 
 enum MutationType {

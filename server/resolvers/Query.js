@@ -48,7 +48,10 @@ const Query = {
       _id: args.id
     })
     return result
-  }
+  },
+  // async projectNames(parent, args, content, info) {
+  //   var result
+  // }
 }
 
 module.exports = Query
