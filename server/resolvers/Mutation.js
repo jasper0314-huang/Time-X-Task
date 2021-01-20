@@ -7,8 +7,9 @@ const Record = require('../models/record')
 const Mutation = {
   createUser: async (_, { data }, pubSub, info) => {
     const newUser = new User({ userName: data.userName, projects: []});
-    const error = await newUser.save();
-    var result = await User.findById(newUser._id).populate({
+    const error = newUser.save();
+    if (error) console.log(error);
+    const result = await User.findById(newUser._id).populate({
       path: 'projects',
       model: 'project',
       populate: {
@@ -26,8 +27,6 @@ const Mutation = {
         data: result
       }
     })
-
-    if (error) return error
     return newUser.populate({
       path: 'projects',
       model: 'project',
@@ -42,13 +41,26 @@ const Mutation = {
     });
   },
   deleteUser: async (_, { id }, pubSub, info) => {
+
+    const result = await User.findById(id).populate({
+      path: 'projects',
+      model: 'project',
+      populate: {
+        path: 'assignments',
+        model: 'assignment',
+        populate: {
+          path: 'records',
+          model: 'record'
+        }
+      }
+    });
     await User.deleteOne({
       _id: id
     })
     pubSub.publish('user', {
       user: {
         mutation: "DELETED",
-        data: {}
+        data: result
       }
     })
     return `userID: ${id} deleted!!`;
@@ -79,9 +91,19 @@ const Mutation = {
     return userRet
   },
   createProject: async (_, { data }, pubSub, info) => {
-    const newProject = new Project({ projectName: data.projectName });
+    var newProject = new Project({ projectName: data.projectName });
     const error = await newProject.save();
     if (error) console.log(error);
+    console.log('__'+data.projectName);
+    const defaultAssignment = new Assignment({ assignmentName: ('__'+data.projectName) });
+    const error2 = await defaultAssignment.save();
+    if (error2) console.log(error2);
+    console.log(defaultAssignment._id);
+    await Project.updateOne(
+      { _id: newProject._id },
+      { $push: { "assignments": defaultAssignment._id } }
+    )
+
     await User.updateOne(
       { _id: data.userID },
       { $push: { projects: newProject._id } }
