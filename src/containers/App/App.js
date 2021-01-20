@@ -45,7 +45,7 @@ function App() {
           </div>
         ) : (
           <div>
-            {/* <BallPool user={data.user} /> */}
+            <BallPool user={data.user} />
           </div>
         )}
       </div>

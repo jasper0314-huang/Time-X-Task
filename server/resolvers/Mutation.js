@@ -7,8 +7,8 @@ const Record = require('../models/record')
 const Mutation = {
   createUser: async (_, { data }, pubSub, info) => {
     const newUser = new User({ userName: data.userName, projects: []});
-    const error = newUser.save();
-    if (error) console.log(error);
+    // const error = newUser.save();
+    // if (error) console.log(error);
     const result = await User.findById(newUser._id).populate({
       path: 'projects',
       model: 'project',
@@ -93,12 +93,12 @@ const Mutation = {
   createProject: async (_, { data }, pubSub, info) => {
     var newProject = new Project({ projectName: data.projectName });
     const error = await newProject.save();
-    if (error) console.log(error);
-    console.log('__'+data.projectName);
+    // if (error) console.log(error);
+    // console.log('__'+data.projectName);
     const defaultAssignment = new Assignment({ assignmentName: ('__'+data.projectName) });
     const error2 = await defaultAssignment.save();
-    if (error2) console.log(error2);
-    console.log(defaultAssignment._id);
+    // if (error2) console.log(error2);
+    // console.log(defaultAssignment._id);
     await Project.updateOne(
       { _id: newProject._id },
       { $push: { "assignments": defaultAssignment._id } }
@@ -204,7 +204,7 @@ const Mutation = {
       });
     } 
     const error = await newAssignment.save();
-    if (error) console.log(error);
+    // if (error) console.log(error);
     await Project.updateOne(
       { _id: data.projectID },
       { $push: { "assignments": newAssignment._id } }
@@ -300,9 +300,12 @@ const Mutation = {
     return assignmentRet
   },
   createRecord: async (_, { userID, data }, pubSub, info) => {
-    const newRecord = new Record({ startAt: data.startAt, duration: data.duration })
+    const newRecord = new Record({
+      startAt: data.startAt,
+      duration: data.duration
+    })
     const error = await newRecord.save();
-    if (error) console.log(error);
+    // if (error) console.log(error);
     await Assignment.updateOne(
       { _id: data.assignmentID },
       { $push: { "records": newRecord._id } }
