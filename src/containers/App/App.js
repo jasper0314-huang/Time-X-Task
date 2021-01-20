@@ -6,7 +6,9 @@ import { Button, Input, Tag } from 'antd'
 import BallPool from "../BallPool"
 import Search from "../Search"
 import GlobalBall from "../../components/Ball/GlobalBall"
-import { Bounce, Shake } from 'react-motions'
+// import { Bounce, Shake } from 'react-motions'
+// import { Dimensions, TouchableHighlight, Text } from 'react-native';
+
 
 
 import {
@@ -64,17 +66,15 @@ function App() {
               </div>
             ) : (
               <div>
-                {/* <BallPool user={data.user} /> */}
-                <GlobalBall user={data.user} />
+                <BallPool user={data.user} />
+                {/* <GlobalBall user={data.user} /> */}
               </div>
             )}
           </div>
         </div>
       )
     }
-    <Bounce infinite>
-    <div>How can I look beautiful</div>
-    </Bounce>
+
     </>
   )
 }
