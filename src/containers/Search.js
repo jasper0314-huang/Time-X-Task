@@ -58,7 +58,7 @@ function Search() {
         onChange={(e) => setFindAssignment(e.target.value)}
         style={{ marginBottom: 10 }}
       ></Input> */}
-      <div clasName="SearchBox__container">
+      {/* <div clasName="SearchBox__container">
         <div className="SearchBox">
           <Highlights label="Project Name" data={ProjectNames} setFindProject={setFindProject}></Highlights>
         </div>
@@ -66,7 +66,7 @@ function Search() {
           <Highlights label="Assignment Name" data={AssignmentNames} setFindProject={setFindProject}></Highlights>
         </div>
       </div>
-      {/* <div className="Histogram__container">
+      <div className="Histogram__container">
         <MyHistogram />
       </div> */}
       <div className="pie__container">
