@@ -1,45 +1,63 @@
-/* Pie.js */
-import React, { Component } from 'react'
-import CanvasJSReact from './canvasjs.react';
-var CanvasJS = CanvasJSReact.CanvasJS;
-var CanvasJSChart = CanvasJSReact.CanvasJSChart;
+import React, { useEffect, useCallback, useRef, useState, Component } from 'react'
+import { PieChart } from "react-minimal-pie-chart";
 
-export class Pie extends Component {
-	render() {
-		const options = {
-			theme: "dark2",
-			animationEnabled: true,
-			exportFileName: "My Week",
-			exportEnabled: true,
-			title:{
-				text: "My Week"
-			},
-			data: [{
-				type: "pie",
-				showInLegend: true,
-				legendText: "{label}",
-				toolTipContent: "{label}: <strong>{y}%</strong>",
-				indexLabel: "{y}%",
-				indexLabelPlacement: "inside",
-				dataPoints: [
-					{ y: 32, label: "Health" },
-					{ y: 22, label: "Finance" },
-					{ y: 15, label: "Education" },
-					{ y: 1, label: "Career" },
-					{ y: 5, label: "Family" },
-					{ y: 7, label: "Real Estate" }
-				]
-			}]
-		}
-		return (
-		<div>
-			<CanvasJSChart options = {options}
-				/* onRef={ref => this.chart = ref} */
-			/>
-			{/*You can get reference to the chart instance as shown above using onRef. This allows you to access all chart properties and methods*/}
-		</div>
-		);
-	}
+export function Pie() {
+    const lineWidth = 60;
+
+    const [selected, setSelected] = useState(0);
+    const [hovered, setHovered] = useState(undefined);
+
+    const data = [
+        {
+        color: "#E38627",
+        title: "One",
+        value: 10,
+        },
+        {
+        color: "#C13C37",
+        title: "Two",
+        value: 15,
+        },
+        {
+        color: "#6A2135",
+        title: "Three",
+        value: 20,
+        }
+    ]
+
+    return (
+    <div>
+        <PieChart
+            style={{
+                fontFamily:
+                '"Nunito Sans", -apple-system, Helvetica, Arial, sans-serif',
+                fontSize: '8px',
+            }}
+            data={data}
+            radius={PieChart.defaultProps.radius - 6}
+            lineWidth={60}
+            segmentsStyle={{ transition: 'stroke .3s', cursor: 'pointer' }}
+            segmentsShift={(index) => (index === selected ? 6 : 1)}
+            animate
+            label={({ dataEntry }) => Math.round(dataEntry.percentage) + '%'}
+            labelPosition={100 - lineWidth / 2}
+            labelStyle={{
+                fill: '#fff',
+                opacity: 0.75,
+                pointerEvents: 'none',
+            }}
+            onClick={(_, index) => {
+                setSelected(index === selected ? undefined : index);
+            }}
+            onMouseOver={(_, index) => {
+                setHovered(index);
+            }}
+            onMouseOut={() => {
+                setHovered(undefined);
+            }}
+            />	
+        </div>
+    );
 }
 
-export default Pie
+export default Pie;

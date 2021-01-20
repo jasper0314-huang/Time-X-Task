@@ -4,7 +4,7 @@
   align-items: center;
   justify-content: center;
   height: 100vh;
-  width: 500px;
+  width: 1000px;
   margin: auto;
 }
 
@@ -28,4 +28,10 @@
   margin: 20px;
   padding: 20px;
   overflow: auto;
+}
+
+.SearchBox {
+  display: inline-block;
+  vertical-align: baseline; 
+  padding-right: 30px;
 }

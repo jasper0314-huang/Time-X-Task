@@ -8,17 +8,17 @@ export class MyHistogram extends Component {
 		const rawData = Array(100).fill().map(() => Math.round(Math.random() * 100) / 10);
 		// const rawData = [132,213,123,3445,1232,324,32,132,13,132,132,1321,43,23,334,324,24,2453]
 		console.log(rawData);
-		const data = this.props.data;
-		console.log(data);
+		// const data = this.props.data;
+		// console.log(data);
 		return (
 			<Histogram
 			theme={chartTheme}
-			width={500}
-			height={500}
+			width={450}
+			height={450}
 			ariaLabel="My histogram of ..."
 			orientation="vertical"
 			cumulative={false}
-			normalized={true}
+			normalized={false}
 			binCount={25}
 			valueAccessor={datum => datum}
 			binType="numeric"
@@ -31,10 +31,8 @@ export class MyHistogram extends Component {
 			  </div>
 			)}
 		  >
-			<BarSeries
-			  animated
-			  rawData={rawData}
-			/>
+			<BarSeries animated rawData={rawData} />
+			<DensitySeries animated rawData={rawData} />
 			<XAxis
 			  label="hrs"
 			/>

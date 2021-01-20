@@ -6,6 +6,7 @@ import { Button, Input, Tag } from 'antd'
 import Pie from '../../components/Search/Pie';
 import MyHistogram from '../../components/Search/MyHistogram';
 import BallPool from "../BallPool"
+import Search from "../Search"
 
 
 
@@ -17,33 +18,28 @@ import {
 } from '../../graphql'
 
 function App() {
-  var variables = { userName: "Tien" }
+  var variables = { userName: "A" }
   const { loading, error, data, subscribeToMore } = useQuery(USER_QUERY, {
     variables: variables
   });
-  const [changepage, setChangepage] = useState(false);
+  const [changepage, setChangepage] = useState(true);
   const [keyword, setKeyword] = useState('');
 
   const tmp = () => {
     setChangepage(!changepage);
   }
+  // console.log(data);
   return (
     <div className="App">
       <Button onClick={tmp} >Switch</Button>
       <div>
         {loading ? (<div>Loading...</div>) : changepage ? ( 
           <div>
-            <Input
-              placeholder="What SECRET do you want to know?"
-              value={keyword}
-              onChange={(e) => setKeyword(e.target.value)}
-              style={{ marginBottom: 10 }}
-            ></Input>
-            <MyHistogram data={ data } />
+            <Search />
           </div>
         ) : (
           <div>
-            <BallPool user={data.user} />
+            {/* <BallPool user={data.user} /> */}
           </div>
         )}
       </div>
