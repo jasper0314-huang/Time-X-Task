@@ -31,6 +31,7 @@
     "react-tooltip": "^4.2.13",
     "reactstrap": "^8.4.1",
     "rebass": "^4.0.7",
+    "recharts": "^2.0.3",
     "socket.io-client": "^3.0.3",
     "web-vitals": "^0.2.4",
     "websocket": "^1.0.32"

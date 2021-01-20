@@ -5,6 +5,7 @@ import 'antd/dist/antd.css';
 import { Button, Input, Tag } from 'antd'
 import BallPool from "../BallPool"
 import Search from "../Search"
+import GlobalBall from "../../components/Ball/GlobalBall"
 
 import {
   USER_QUERY,
@@ -16,7 +17,7 @@ function App() {
   const { loading, error, data, subscribeToMore } = useQuery(USER_QUERY, {
     variables: variables
   });
-  const [changepage, setChangepage] = useState(true);
+  const [changepage, setChangepage] = useState(false);
 
   useEffect(() => {
     subscribeToMore({
@@ -45,7 +46,8 @@ function App() {
           </div>
         ) : (
           <div>
-            <BallPool user={data.user} />
+            {/* <BallPool user={data.user} /> */}
+            <GlobalBall user={data.user} />
           </div>
         )}
       </div>

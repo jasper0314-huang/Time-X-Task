@@ -26,16 +26,19 @@ export function Pie() {
         }
     ]
 
+    // const radius = PieChart.defaultProps.radius - 6;
+    const radius = 20;
     return (
       <div data-tip="" data-for="chart">
           <PieChart
             style={{
                 fontFamily:
                 '"Nunito Sans", -apple-system, Helvetica, Arial, sans-serif',
-                fontSize: '8px',
+                fontSize: '5px',
             }}
             data={data}
-            radius={PieChart.defaultProps.radius - 6}
+            label={(props) => { return props.dataEntry.title;}}
+            radius={radius}
             lineWidth={60}
             segmentsStyle={{ transition: 'stroke .3s', cursor: 'pointer' }}
             segmentsShift={(index) => (index === selected ? 6 : 1)}

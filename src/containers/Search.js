@@ -3,8 +3,6 @@ import { useQuery, useMutation, useLazyQuery } from '@apollo/react-hooks'
 import { Button } from '@material-ui/core';
 import MyHistogram from '../components/Search/MyHistogram';
 import Highlights from '../components/Search/InputBox';
-import Pie from '../components/Search/Pie';
-import Pie2 from '../components/Search/Pie_canvas';
 
 // auto complete source: https://material-ui.com/components/autocomplete/#api
 
