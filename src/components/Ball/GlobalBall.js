@@ -73,6 +73,8 @@ const GlobalBall = ({ user }) => {
                     <MyPie data={data2stat(user)}/>
                 </div>
             </div>
+            <div>
+            </div>
         </div>
         </>
     )

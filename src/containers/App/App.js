@@ -6,6 +6,8 @@ import { Button, Input, Tag } from 'antd'
 import BallPool from "../BallPool"
 import Search from "../Search"
 import GlobalBall from "../../components/Ball/GlobalBall"
+import { Bounce, Shake } from 'react-motions'
+
 
 import {
   USER_QUERY,
@@ -56,24 +58,23 @@ function App() {
         <div className="App">
           <Button onClick={tmp} >Switch</Button>
           <div>
-<<<<<<< HEAD
-            {/* <BallPool user={data.user} /> */}
-            <GlobalBall user={data.user} />
-=======
             {loading ? (<div>Loading...</div>) : changepage ? ( 
               <div>
                 <Search />
               </div>
             ) : (
               <div>
-                <BallPool user={data.user} />
+                {/* <BallPool user={data.user} /> */}
+                <GlobalBall user={data.user} />
               </div>
             )}
->>>>>>> be4fa32a204cb2d03aa0823cf015f9268a84a13f
           </div>
         </div>
       )
     }
+    <Bounce infinite>
+    <div>How can I look beautiful</div>
+    </Bounce>
     </>
   )
 }
