@@ -3,7 +3,7 @@ import { useMutation } from '@apollo/react-hooks'
 import Item from "./TodoItem"
 import Button from "./TodoButton"
 import "../style/TodoList.css"
-import { 
+import {
     CREATE_ASSIGNMENT_MUTATION,
     UPDATE_ASSIGNMENT_MUTATION,
     DELETE_ASSIGNMENT_MUTATION
@@ -32,7 +32,7 @@ import 'react-calendar/dist/Calendar.css';
 ]
 */
 
-const TodoList = ({ userID, projectID, assignments }) => {
+const TodoList = ({ userID, projectID, assignments, timingFunc }) => {
     const [pages, setPages] = useState([
         {show: true, buttonName: "All"},
         {show: false, buttonName: "Active"},
@@ -61,10 +61,43 @@ const TodoList = ({ userID, projectID, assignments }) => {
         }
     }
 
-    const addItem = (event) => {
-        if(event.keyCode === 13 && event.target.value !== '') {
-            const todo = event.target.value;
-            let time = event.target.parentNode.childNodes[1].childNodes[1].value;
+    // const addItem = (event) => {
+    //     if(event.keyCode === 13 && event.target.value !== '') {
+    //         const todo = event.target.value;
+    //         let time = event.target.parentNode.childNodes[1].childNodes[1].value;
+    //         let deadline;
+    //         if (value !== undefined && time !== "") {
+    //             const ISO = value.toISOString();
+    //             deadline = ISO.substring(0, 11) + time + ISO.substring(16)
+    //         } else {
+    //             deadline = undefined;
+    //         }
+
+    //         console.log(todo);
+    //         console.log(deadline);
+
+    //         createAssignment({
+    //             variables: {
+    //                 userID: userID,
+    //                 data: {
+    //                     projectID: projectID,
+    //                     assignmentName: todo,
+    //                     deadline: deadline
+    //                 }
+    //             }
+    //         })
+
+    //         event.target.value = "";
+    //         event.target.parentNode.childNodes[1].childNodes[1].value = "";
+    //         setValue(undefined);
+    //     }
+    // }
+
+    const addItem__button = (event) => {
+        const box = event.target.parentNode.parentNode;
+        if(box.childNodes[0].value !== '') {
+            const todo = box.childNodes[0].value;
+            let time = box.childNodes[1].childNodes[1].value;
             let deadline;
             if (value !== undefined && time !== "") {
                 const ISO = value.toISOString();
@@ -87,8 +120,8 @@ const TodoList = ({ userID, projectID, assignments }) => {
                 }
             })
 
-            event.target.value = "";
-            event.target.parentNode.childNodes[1].childNodes[1].value = "";
+            box.childNodes[0].value = "";
+            box.childNodes[1].childNodes[1].value = "";
             setValue(undefined);
         }
     }
@@ -139,23 +172,28 @@ const TodoList = ({ userID, projectID, assignments }) => {
             <div className="todo-app_box">
                 <section className="todo-app__main">
                     <div className="todo-app__input__box">
-                        <input className="todo-app__input" id="todo-input-assignment" onKeyUp={addItem} 
+                        <input className="todo-app__input" id="todo-input-assignment"
+                        // onKeyUp={addItem} 
                         placeholder="What needs to be done?"></input>
                         <form className="todo-app__form">
                             <input className="todo-app__input" id="todo-input-deadline" readOnly={true}
                             placeholder="(no deadline)" value={value===""? null : date2Human(value)}></input>
                             <input className="todo-app__input" id="todo-input-clocktime" type="time"></input>
+                            <input type="button" value="Enter" onClick={addItem__button} ></input>
                             <input type="reset" value="Reset" onClick={resetTime} ></input>
                         </form>
                     </div>
                     <ul className="todo-app__list" id="todo-list">
                         {
-                            assignments.filter(filterRule()).map(e => 
-                            <Item 
-                                assignment={e}
-                                deleteItem={deleteItem}
-                                completeItem={completeItem}
-                            />) 
+                            assignments.filter(filterRule()).map(e => (
+                                <div onClick={timingFunc(e.id)}>
+                                    <Item
+                                        assignment={e}
+                                        deleteItem={deleteItem}
+                                        completeItem={completeItem}
+                                    />
+                                </div>
+                            )) 
                         }
                     </ul>
                 </section>

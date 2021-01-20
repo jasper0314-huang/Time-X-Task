@@ -1,6 +1,7 @@
 :root {
     --width: 1100px;
-    --height: 400px;
+    --todolist--height: 400px;
+    --recordlinks--height: 300px;
 }
 
 .outside__box {
@@ -8,11 +9,18 @@
     flex-direction: column;
 }
 
+.inside__box {
+    display: flex;
+    flex-direction: row;
+    height: var(--recordlinks--height);
+    width: var(--width);
+}
+
 .todolist__root {
     border-width: 3px;
     border-style: solid;
     border-color: blueviolet;
-    height: var(--height);
+    height: var(--todolist--height);
     width: var(--width);
 }
 
@@ -20,14 +28,27 @@
     border-width: 3px;
     border-style: solid;
     border-color: yellowgreen;
-    height: var(--height);
-    width: var(--width);
+    height: 100%;
+    width: 30%;
 }
 
 .linkbar__root {
     border-width: 3px;
     border-style: solid;
     border-color: red;
-    height: var(--height);
-    width: var(--width);
+    height: 100%;
+    width: 70%;
+}
+
+/* .react-stopwatch-timer__element {
+    width: 3px !important;
+    height: 3px !important;
+    border-radius: 5px;
+} */
+
+.react-stopwatch-timer__table{
+    margin: auto;
+    font-size: 30px;
+    width: 300px !important;
+    height: 300px !important;
 }

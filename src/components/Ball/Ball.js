@@ -5,6 +5,8 @@ import Record from "./Record/Record"
 import "./style/Ball.css"
 import 'react-calendar/dist/Calendar.css';
 
+import ReactStopwatchTimer from "../timer/ReactTimerStopwatch";
+
 /*
 {
     "id": "6006c18a74a4fd4df4c3a7f2",
@@ -35,6 +37,18 @@ import 'react-calendar/dist/Calendar.css';
 */
 
 const Ball = ({ userID, project }) => {
+    const fromTime = new Date(0, 0, 0, 0, 0, 0, 0);
+    const [timing, setTiming] = useState(false);
+
+    const timingFunc = (assignmentID) => {
+        return (event) => {
+            if (timing) {
+                setTiming(false);
+            } else {
+                setTiming(true);
+            }
+        }
+    }
 
     return (
         <>
@@ -44,16 +58,33 @@ const Ball = ({ userID, project }) => {
                 <TodoList
                     userID={userID}
                     projectID={project.id}
-                    assignments={project.assignments} 
+                    assignments={project.assignments}
+                    timingFunc={timingFunc}
                 />
             </div>
 
-            <div className="record__root">
-                <Record />
-            </div>
+            <div className="inside__box">
+                <div className="record__root"> 
+                {
+                    timing? (
+                        <ReactStopwatchTimer
+                            isOn={true}
+                            className="react-stopwatch-timer__table"
+                            watchType="stopwatch"
+                            displayCircle={true} 
+                            color="gray" 
+                            hintColor="red" 
+                            fromTime={fromTime}
+                        />
+                    ) : (
+                        <Record />
+                    )
+                }
+                </div>
 
-            <div className="linkbar__root">
-                <LinkBar links={project.links} />
+                <div className="linkbar__root">
+                    <LinkBar links={project.links} />
+                </div>
             </div>
         </div>
         </>
