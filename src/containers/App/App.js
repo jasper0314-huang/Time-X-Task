@@ -3,8 +3,9 @@ import { useQuery, useMutation } from '@apollo/react-hooks'
 import './App.css'
 import 'antd/dist/antd.css'; 
 import { Button, Input, Tag } from 'antd'
-import Pie from '../../components/Statistic/Pie';
-import MyHistogram from '../../components/Statistic/MyHistogram';
+import Pie from '../../components/Search/Pie';
+import MyHistogram from '../../components/Search/MyHistogram';
+import Ball from "../../components/Ball/Ball"
 
 
 
@@ -20,7 +21,7 @@ function App() {
   const { loading, error, data, subscribeToMore } = useQuery(USER_QUERY, {
     variables: variables
   });
-  const [changepage, setChangepage] = useState(true);
+  const [changepage, setChangepage] = useState(false);
   const [keyword, setKeyword] = useState('');
 
   const tmp = () => {
@@ -42,7 +43,7 @@ function App() {
           </div>
         ) : (
           <div>
-            <Pie />
+            <Ball userID={data.user.id} project={data.user.projects[0]} />
           </div>
         )}
       </div>

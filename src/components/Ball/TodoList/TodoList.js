@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useMutation } from '@apollo/client'
+import { useMutation } from '@apollo/react-hooks'
 import Item from "./TodoItem"
 import Button from "./TodoButton"
 import "../style/TodoList.css"
@@ -7,7 +7,7 @@ import {
     CREATE_ASSIGNMENT_MUTATION,
     UPDATE_ASSIGNMENT_MUTATION,
     DELETE_ASSIGNMENT_MUTATION
-} from "../../graphql"
+} from "../../../graphql"
 
 /*
 "assignments": [

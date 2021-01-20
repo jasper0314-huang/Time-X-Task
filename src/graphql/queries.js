@@ -9,31 +9,26 @@ const USER_QUERY = gql`
         userName: $userName
         id: $id
       ) {
-        id
-        userName
-        projects {
           id
-          projectName
-          assignments {
+          userName
+          projects {
             id
-            assignmentName
+            projectName
+            links
+            assignments {
+              id
+              assignmentName
+              deadline
+              record {
+                startAt
+                duration
+              }
+              status
+              isComplete
+            }
           }
         }
-      }
   }
 `
 
-// const USERS_QUERY = gql`
-//   query {
-//     users {
-//       id
-//       userName
-//       projects {
-//         id
-//         projectName
-//       }
-//     }
-//   }
-// `
-
-export {USER_QUERY};
+export { USER_QUERY };
