@@ -23,7 +23,7 @@ import Img from "../img/x.png"
 const todoItem = ({ assignment, deleteItem, completeItem }) => {
     const id = assignment.id;
     const isComplete = assignment.isComplete
-    const deadline_display = assignment.deadline? assignment.deadline.formatted : "";
+    const deadline_display = assignment.deadline? (new Date(assignment.deadline)).toLocaleString() : "";
     return (
         <li className="todo-app__item" id={id}>
             <div className="todo-app__checkbox">
@@ -31,7 +31,8 @@ const todoItem = ({ assignment, deleteItem, completeItem }) => {
                 <label htmlFor={id + "_id"}></label>
             </div>
             <h3 className="todo-app__item-detail">
-                {assignment.assignmentName} {deadline_display}
+                <span style={{ padding: "0px 100px 0px 0px" }}>{assignment.assignmentName}</span>
+                <span>{deadline_display}</span>
             </h3>
             <img src={Img} className="todo-app__item-x" alt="X" onClick={deleteItem(id)}></img>
         </li>

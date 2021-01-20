@@ -10,8 +10,6 @@ import {
 } from "../../../graphql"
 import Calendar from "react-calendar"
 import 'react-calendar/dist/Calendar.css';
-import Img from "../img/x.png"
-import { even } from "check-types";
 
 /*
 "assignments": [
@@ -40,7 +38,7 @@ const TodoList = ({ userID, projectID, assignments }) => {
         {show: false, buttonName: "Active"},
         {show: false, buttonName: "Completed"},
     ]);
-    const [value, setValue] = useState();
+    const [value, setValue] = useState(undefined);
     const [createAssignment] = useMutation(CREATE_ASSIGNMENT_MUTATION)
     const [updateAssignment] = useMutation(UPDATE_ASSIGNMENT_MUTATION)
     const [deleteAssignment] = useMutation(DELETE_ASSIGNMENT_MUTATION)
@@ -51,60 +49,59 @@ const TodoList = ({ userID, projectID, assignments }) => {
         return date.toLocaleDateString();
     }
 
-    const deleteItem = (id, reload=true) => {
+    const deleteItem = (id) => {
         return async (event) => {
             const reply = await deleteAssignment({
                 variables: {
+                    userID: userID,
                     assignmentID: id
                 }
             })
             console.log(reply);
-
-            // can be replace by subscribe
-            if (reload)
-                window.location.reload();
         }
     }
 
     const addItem = (event) => {
         if(event.keyCode === 13 && event.target.value !== '') {
             const todo = event.target.value;
-            let time = event.target.parentNode.childNodes[2].value;
-            if (time === undefined)
-                time = "";
-            
+            let time = event.target.parentNode.childNodes[1].childNodes[1].value;
+            let deadline;
+            if (value !== undefined && time !== "") {
+                const ISO = value.toISOString();
+                deadline = ISO.substring(0, 11) + time + ISO.substring(16)
+            } else {
+                deadline = undefined;
+            }
+
             console.log(todo);
-            console.log(value);
-            console.log(time);
+            console.log(deadline);
 
-            // createAssignment({
-            //     variables: {
-            //         userID,
-            //         projectID,
-            //         assignmentName: todo
-            //     }
-            // })
+            createAssignment({
+                variables: {
+                    userID: userID,
+                    data: {
+                        projectID: projectID,
+                        assignmentName: todo,
+                        deadline: deadline
+                    }
+                }
+            })
 
-            // // can be replace by subscribe
-            // window.location.reload();
-
-            event.target.value = '';
-            event.target.parentNode.childNodes[2].value = "";
-            setValue("");
+            event.target.value = "";
+            event.target.parentNode.childNodes[1].childNodes[1].value = "";
+            setValue(undefined);
         }
     }
 
     const completeItem = (id, isComplete) => {
         return async (event) => {
-            console.log(id, isComplete)
             await updateAssignment({
                 variables: {
+                    userID: userID,
                     assignmentID: id,
                     data: { isComplete: !isComplete }
                 }
             })
-            // can be replace by subscribe
-            window.location.reload();
         }
     }
 
@@ -127,15 +124,13 @@ const TodoList = ({ userID, projectID, assignments }) => {
     const deleteCompleted = async (event) => {
         for (let a of assignments) {
             if (a.isComplete)
-                await deleteItem(a.id, false); 
+                await deleteItem(a.id); 
         }
-        // can be replace by subscribe
-        window.location.reload();
     }
 
     const resetTime = (event) => {
         const formChildNodes = event.target.parentNode.childNodes;
-        setValue("");
+        setValue(undefined);
         formChildNodes[1].value = "";
     }
 
@@ -165,7 +160,7 @@ const TodoList = ({ userID, projectID, assignments }) => {
                     </ul>
                 </section>
                     <footer className="todo-app__footer" id="todo-footer">
-                        <div className="todo-app__total" id="todo-total">{assignments.length} left</div>
+                        <div className="todo-app__total" id="todo-total" onClick={(event) => {setValue(new Date())}}>{assignments.length} left</div>
                         <ul className="todo-app__view-buttons" id="todo-view">
                             { pages.map(e => <Button buttonName={e.buttonName} show={e.show} changePage={changePage} />) }
                         </ul>
