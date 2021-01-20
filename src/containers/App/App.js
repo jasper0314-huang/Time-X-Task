@@ -31,7 +31,7 @@ function App() {
   }, [subscribeToMore])
 
   const tmp = () => {
-
+    console.log(data.user);
     setChangepage(!changepage);
   }
   // console.log(data);
