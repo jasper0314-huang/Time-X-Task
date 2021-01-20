@@ -25,13 +25,13 @@ function App() {
         if (!subscriptionData.data) return prev
         const newUser = subscriptionData.data.user.data
         // console.log(newUser);
-        return newUser
+        return {newUser}
       }
     })
   }, [subscribeToMore])
 
   const tmp = () => {
-    
+
     setChangepage(!changepage);
   }
   // console.log(data);
