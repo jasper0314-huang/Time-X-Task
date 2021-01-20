@@ -74,6 +74,13 @@ input[type='checkbox'] {
     width: 40%;
 }
 
+#item__assignment {
+    width: 40%;
+}
+#item__deadline {
+    width: 40%;
+}
+
 
 .todo-app__main {
     background: rgb(254, 254, 254);
@@ -130,6 +137,8 @@ input[type='checkbox'] {
 }
 
 .todo-app__item-detail {
+    display:flex;
+    flex-direction: row;
     font-weight: 300;
     overflow-wrap: break-word;
     width: 90%;

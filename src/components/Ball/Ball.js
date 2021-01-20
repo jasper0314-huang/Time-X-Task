@@ -51,8 +51,11 @@ const Ball = ({ userID, project }) => {
 
     const timingFunc = (assignmentID) => {
         return (event) => {
+            if (event.target.id === assignmentID + "_img")
+                return;
+            const node = document.getElementById(assignmentID + "_item");
             if (timing) {
-                clearInterval(intervalId);
+                node.style.backgroundColor = "white";
                 // mutation
                 console.log(startTime);
                 const duration = parseInt((Date.now() - startTime) / 1000);
@@ -71,6 +74,7 @@ const Ball = ({ userID, project }) => {
 
                 setTiming(false);
             } else {
+                node.style.backgroundColor = "red";
                 setStartTime(Date.now());
                 setTiming(true);
             }

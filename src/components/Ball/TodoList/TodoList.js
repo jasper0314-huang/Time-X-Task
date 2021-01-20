@@ -34,8 +34,8 @@ import 'react-calendar/dist/Calendar.css';
 
 const TodoList = ({ userID, projectID, assignments, timingFunc }) => {
     const [pages, setPages] = useState([
-        {show: true, buttonName: "All"},
-        {show: false, buttonName: "Active"},
+        {show: true, buttonName: "Active"},
+        {show: false, buttonName: "All"},
         {show: false, buttonName: "Completed"},
     ]);
     const [value, setValue] = useState(undefined);
@@ -139,9 +139,16 @@ const TodoList = ({ userID, projectID, assignments, timingFunc }) => {
     }
 
     const filterRule = () => {
-        if(pages[0].show) return (e => (true));
-        else if(pages[1].show) return (e => (!e.isComplete));
-        else return (e => (e.isComplete));
+        const rules = {
+            "Active": e => (!e.isComplete),
+            "All": e => (true),
+            "Completed": e => (e.isComplete)
+        }
+        for (let page of pages) {
+            if (page.show)
+                return rules[page.buttonName];
+        }
+        return e => (true);
     }
 
     const changePage = (buttonNmae) => {
