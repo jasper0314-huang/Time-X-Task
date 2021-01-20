@@ -34,11 +34,12 @@ import 'react-calendar/dist/Calendar.css';
 
 const TodoList = ({ userID, projectID, assignments, timingFunc }) => {
     const [pages, setPages] = useState([
-        {show: true, buttonName: "Active"},
+        {show: true, buttonName: "Active1"},
+        {show: false, buttonName: "Active2"},
         {show: false, buttonName: "All"},
         {show: false, buttonName: "Completed"},
     ]);
-    const [value, setValue] = useState(undefined);
+    const [date, setDate] = useState(undefined);
     const [createAssignment] = useMutation(CREATE_ASSIGNMENT_MUTATION)
     const [updateAssignment] = useMutation(UPDATE_ASSIGNMENT_MUTATION)
     const [deleteAssignment] = useMutation(DELETE_ASSIGNMENT_MUTATION)
@@ -66,8 +67,8 @@ const TodoList = ({ userID, projectID, assignments, timingFunc }) => {
     //         const todo = event.target.value;
     //         let time = event.target.parentNode.childNodes[1].childNodes[1].value;
     //         let deadline;
-    //         if (value !== undefined && time !== "") {
-    //             const ISO = value.toISOString();
+    //         if (date !== undefined && time !== "") {
+    //             const ISO = date.toISOString();
     //             deadline = ISO.substring(0, 11) + time + ISO.substring(16)
     //         } else {
     //             deadline = undefined;
@@ -89,25 +90,32 @@ const TodoList = ({ userID, projectID, assignments, timingFunc }) => {
 
     //         event.target.value = "";
     //         event.target.parentNode.childNodes[1].childNodes[1].value = "";
-    //         setValue(undefined);
+    //         setDate(undefined);
     //     }
     // }
 
     const addItem__button = (event) => {
         const box = event.target.parentNode.parentNode;
-        if(box.childNodes[0].value !== '') {
+        if (box.childNodes[0].value !== '') {
             const todo = box.childNodes[0].value;
             let time = box.childNodes[1].childNodes[1].value;
             let deadline;
-            if (value !== undefined && time !== "") {
-                const ISO = value.toISOString();
-                deadline = ISO.substring(0, 11) + time + ISO.substring(16)
+            if (date !== undefined && time !== "") {
+                const date_obj = new Date(date);
+                deadline = (new Date(
+                    date_obj.getFullYear(),
+                    date_obj.getMonth(),
+                    date_obj.getDate(),
+                    parseInt(time.substring(0, 3)),
+                    parseInt(time.substring(3))
+                )).toISOString();
+                console.log(deadline);
             } else {
                 deadline = undefined;
             }
 
-            console.log(todo);
-            console.log(deadline);
+            // console.log(todo);
+            // console.log(deadline);
 
             createAssignment({
                 variables: {
@@ -122,7 +130,7 @@ const TodoList = ({ userID, projectID, assignments, timingFunc }) => {
 
             box.childNodes[0].value = "";
             box.childNodes[1].childNodes[1].value = "";
-            setValue(undefined);
+            setDate(undefined);
         }
     }
 
@@ -140,9 +148,10 @@ const TodoList = ({ userID, projectID, assignments, timingFunc }) => {
 
     const filterRule = () => {
         const rules = {
-            "Active": e => (!e.isComplete),
+            "Active1": e => (!e.isComplete && e.deadline !== null),
+            "Active2": e => (!e.isComplete && e.deadline === null),
             "All": e => (true),
-            "Completed": e => (e.isComplete)
+            "Completed": e => (e.isComplete),
         }
         for (let page of pages) {
             if (page.show)
@@ -170,7 +179,7 @@ const TodoList = ({ userID, projectID, assignments, timingFunc }) => {
 
     const resetTime = (event) => {
         const formChildNodes = event.target.parentNode.childNodes;
-        setValue(undefined);
+        setDate(undefined);
         formChildNodes[1].value = "";
     }
 
@@ -184,7 +193,7 @@ const TodoList = ({ userID, projectID, assignments, timingFunc }) => {
                         placeholder="What needs to be done?"></input>
                         <form className="todo-app__form">
                             <input className="todo-app__input" id="todo-input-deadline" readOnly={true}
-                            placeholder="(no deadline)" value={value===""? null : date2Human(value)}></input>
+                            placeholder="(no deadline)" value={date===""? null : date2Human(date)}></input>
                             <input className="todo-app__input" id="todo-input-clocktime" type="time"></input>
                             <input type="button" value="Enter" onClick={addItem__button} ></input>
                             <input type="reset" value="Reset" onClick={resetTime} ></input>
@@ -205,7 +214,7 @@ const TodoList = ({ userID, projectID, assignments, timingFunc }) => {
                     </ul>
                 </section>
                     <footer className="todo-app__footer" id="todo-footer">
-                        <div className="todo-app__total" id="todo-total" onClick={(event) => {setValue(new Date())}}>{assignments.length} left</div>
+                        <div className="todo-app__total" id="todo-total">{assignments.length} left</div>
                         <ul className="todo-app__view-buttons" id="todo-view">
                             { pages.map(e => <Button buttonName={e.buttonName} show={e.show} changePage={changePage} />) }
                         </ul>
@@ -216,8 +225,8 @@ const TodoList = ({ userID, projectID, assignments, timingFunc }) => {
             </div>
             <div className="calendar__box">
                 <Calendar
-                    onChange={setValue}
-                    value={value}
+                    onChange={setDate}
+                    value={date}
                 />
             </div>
         </div>

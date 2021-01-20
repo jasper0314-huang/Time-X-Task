@@ -10,6 +10,7 @@ import {
 } from "../../graphql"
 
 import ReactStopwatchTimer from "../timer/ReactTimerStopwatch";
+import { set } from 'mongoose';
 
 /*
 {
@@ -48,16 +49,16 @@ const Ball = ({ userID, project }) => {
     const [startTime, setStartTime] = useState(0);
     const [createRecord] = useMutation(CREATE_RECORD_MUTATION)
     const [intervalId, setintervalId] = useState(0);
+    const [timingNode, settimingNode] = useState(null);
 
     const timingFunc = (assignmentID) => {
-        return (event) => {
+        return async (event) => {
             if (event.target.id === assignmentID + "_img")
                 return;
-            const node = document.getElementById(assignmentID + "_item");
             if (timing) {
-                node.style.backgroundColor = "white";
+                timingNode.style.backgroundColor = "white";
+                settimingNode(null);
                 // mutation
-                console.log(startTime);
                 const duration = parseInt((Date.now() - startTime) / 1000);
                 const ISO = (new Date(startTime)).toISOString();
 
@@ -74,7 +75,9 @@ const Ball = ({ userID, project }) => {
 
                 setTiming(false);
             } else {
+                const node = document.getElementById(assignmentID + "_item");
                 node.style.backgroundColor = "red";
+                settimingNode(node);
                 setStartTime(Date.now());
                 setTiming(true);
             }
