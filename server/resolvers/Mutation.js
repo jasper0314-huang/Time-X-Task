@@ -50,14 +50,18 @@ const Mutation = {
         data: {}
       }
     })
+    const userRet = User.findById(id);
+    return userRet
   },
   createProject: async (_, { data }, pubSub, info) => {
     const newProject = new Project({ projectName: data.projectName });
     const error = await newProject.save();
     if (error) console.log(error);
+    // console.log(newProject);
+    // console.log(newProject._id);
     await User.updateOne(
       { _id: data.userID },
-      { $push: { projects: newProject } }
+      { $push: { projects: newProject._id } }
     )
     pubSub.publish('project', {
       project: {
@@ -120,14 +124,14 @@ const Mutation = {
     if (error) console.log(error);
     await Project.updateOne(
       { _id: data.projectID },
-      { $push: { "assignments": newAssignment } }
+      { $push: { "assignments": newAssignment._id } }
     )
-    await User.updateOne(
-      { _id: data.userID, "projects._id": data.projectID },
-      { $push: {
-        "projects.$.assignments": newAssignment
-      } } 
-    )
+    // await User.updateOne(
+    //   { _id: data.userID, "projects._id": data.projectID },
+    //   { $push: {
+    //     "projects.$.assignments": newAssignment
+    //   } } 
+    // )
 
     pubSub.publish('assignment', {
       assignment: {

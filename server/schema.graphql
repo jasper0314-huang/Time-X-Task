@@ -4,7 +4,7 @@ type Query {
   user(userName: String id: ID): User # must given one
   project(id: ID!): Project
   assignment(id: ID!): Assignment
-  userProject(userName: String! projectName: String!): [Project] # data for the bubble expansion
+  # userProject(userName: String! projectName: String!): [Project] # data for the bubble expansion
   projectNames: [SubjectCount]
   assignmentNames(projectName: String): [SubjectCount] # when no given projectName, return all projectNames
   searchStats(projectName: String! assignmentName: String): [Int]
@@ -24,7 +24,6 @@ type Mutation {
   # createRecord(data: CreateRecordInput): Record!
   # deleteRecord(id: ID): String # when no given id, delete all users
   # updateRecord(id: ID!, data: UpdateRecordInput): Record
-
 }
 
 type Subscription {
@@ -54,7 +53,6 @@ input UpdateProjectInput { # update with whole links array
 }
 
 input CreateAssignmentInput {
-  userID: ID!
   projectID: ID!
   assignmentName: String!
   deadline: DateTime

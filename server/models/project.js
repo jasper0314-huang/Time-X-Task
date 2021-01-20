@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
-const Assignment = require('./assignment')
-var AssignmentSchema = mongoose.model('assignment').schema
+// const Assignment = require('./assignment')
+// var AssignmentSchema = mongoose.model('assignment').schema
 
 // Creating a schema, sort of like working with an ORM
 const ProjectSchema = new Schema({
@@ -10,7 +10,7 @@ const ProjectSchema = new Schema({
 		required: [true, 'Title field is required.']
 	},
 	assignments: [{
-		type: AssignmentSchema,
+		type: mongoose.Types.ObjectId,
 		ref: 'assignment'
 	}],
 	links: {

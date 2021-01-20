@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
-const Project = require('./project')
-ProjectSchema = mongoose.model('project').schema
+// const Project = require('./project')
+// ProjectSchema = mongoose.model('project').schema
 
 // Creating a schema, sort of like working with an ORM
 const UserSchema = new Schema({
@@ -12,7 +12,7 @@ const UserSchema = new Schema({
 	// projects: [ProjectSchema]
 	projects: {
 		type :[{
-			type: ProjectSchema,
+			type: mongoose.Types.ObjectId,
 			ref: 'project'
 		}],
 		default: []
