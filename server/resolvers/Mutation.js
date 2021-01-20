@@ -190,7 +190,19 @@ const Mutation = {
   },
   createAssignment: async (_, { userID, data }, pubSub, info) => {
     const project = Project.findById(data.projectID);
-    const newAssignment = new Assignment({ assignmentName: data.assignmentName, projectName: project.projectName});
+    var newAssignment;
+    if (data.deadline) {
+      newAssignment = new Assignment({
+        assignmentName: data.assignmentName,
+        projectName: project.projectName,
+        deadline: data.deadline
+      });
+    } else {
+      newAssignment = new Assignment({
+        assignmentName: data.assignmentName,
+        projectName: project.projectName,
+      });
+    } 
     const error = await newAssignment.save();
     if (error) console.log(error);
     await Project.updateOne(

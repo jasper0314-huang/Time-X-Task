@@ -1,14 +1,29 @@
-// import { gql } from 'apollo-boost'
+import { gql } from 'apollo-boost'
 
-// export const MESSAGES_SUBSCRIPTION = gql`
-//   subscription {
-//     message {
-//       mutation
-//       data {
-//         from
-//         to
-//         body
-//       }
-//     }
-//   }
-// `
+export const USER_SUBSCRIPTION = gql`
+  subscription {
+    user {
+      mutation
+      data {
+        id
+        userName
+        projects {
+          id
+          projectName
+          links
+          assignments {
+            id
+            assignmentName
+            deadline
+            records {
+              startAt
+              duration
+            }
+            status
+            isComplete
+          }
+        }
+      }
+    }
+  }
+`

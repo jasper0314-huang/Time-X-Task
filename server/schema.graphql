@@ -51,7 +51,6 @@ input CreateAssignmentInput {
   projectID: ID!
   assignmentName: String!
   deadline: DateTime
-  isComplete: Boolean
 }
 input UpdateAssignmentInput {
   assignmentName: String

@@ -4,4 +4,4 @@ export {
     UPDATE_ASSIGNMENT_MUTATION, 
     DELETE_ASSIGNMENT_MUTATION 
 } from './mutations'
-// export { MESSAGES_SUBSCRIPTION } from './subscriptions'
+export { USER_SUBSCRIPTION } from './subscriptions'

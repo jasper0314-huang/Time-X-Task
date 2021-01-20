@@ -3,18 +3,12 @@ import { useQuery, useMutation } from '@apollo/react-hooks'
 import './App.css'
 import 'antd/dist/antd.css'; 
 import { Button, Input, Tag } from 'antd'
-import Pie from '../../components/Search/Pie';
-import MyHistogram from '../../components/Search/MyHistogram';
 import BallPool from "../BallPool"
 import Search from "../Search"
 
-
-
 import {
   USER_QUERY,
-  // CREATE_MESSAGE_MUTATION,
-  // DELETE_MESSAGE_MUTATION,
-  // MESSAGES_SUBSCRIPTION
+  USER_SUBSCRIPTION
 } from '../../graphql'
 
 function App() {
@@ -23,9 +17,21 @@ function App() {
     variables: variables
   });
   const [changepage, setChangepage] = useState(true);
-  const [keyword, setKeyword] = useState('');
+
+  useEffect(() => {
+    subscribeToMore({
+      document: USER_SUBSCRIPTION,
+      updateQuery: (prev, { subscriptionData }) => {
+        if (!subscriptionData.data) return prev
+        const newUser = subscriptionData.data.user.data
+        // console.log(newUser);
+        return newUser
+      }
+    })
+  }, [subscribeToMore])
 
   const tmp = () => {
+    
     setChangepage(!changepage);
   }
   // console.log(data);
