@@ -31,7 +31,18 @@
 }
 
 .SearchBox {
-  display: inline-block;
-  vertical-align: baseline; 
+  display:table-cell;  
+  vertical-align: top;
   padding-right: 30px;
+  /* border: double;
+  border-color: black; */
+  overflow: auto;
 }
+/* 
+.vertical-center {
+  margin: 0;
+  position: relative;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+} */

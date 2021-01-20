@@ -1,6 +1,5 @@
 import React, { useEffect, useCallback, useRef, useState } from 'react'
-import 'antd/dist/antd.css'; 
-import { Button, Input, Tag } from 'antd'
+import { Button } from '@material-ui/core';
 import MyHistogram from '../components/Search/MyHistogram';
 import Highlights from '../components/Search/InputBox';
 import Pie from '../components/Search/Pie';
@@ -58,21 +57,27 @@ function Search() {
         onChange={(e) => setFindAssignment(e.target.value)}
         style={{ marginBottom: 10 }}
       ></Input> */}
-      {/* <div className="SearchBox__container">
+      <div className="SearchBox__container">
         <div className="SearchBox">
           <Highlights label="Project Name" data={ProjectNames} setFindProject={setFindProject}></Highlights>
         </div>
         <div className="SearchBox">
           <Highlights label="Assignment Name" data={AssignmentNames} setFindProject={setFindProject}></Highlights>
         </div>
+        <div className="SearchBox">
+          <div className="vertical-center">
+            <Button variant="contained" color="primary" fullWidth={true}>
+              Search
+            </Button>
+          </div>
+        </div>
       </div>
       <div className="Histogram__container">
         <MyHistogram />
-      </div> */}
-      <div className="pie__container">
-        <Pie />
-        <Pie2 />
       </div>
+      {/* <div className="pie__container">
+        <Pie />
+      </div> */}
 
     </div>
   )
