@@ -1,0 +1,153 @@
+scalar DateTime
+
+type Query {
+  user(userName: String id: ID): User # must given one
+  project(id: ID!): Project
+  assignment(id: ID!): Assignment
+  userProject(userName: String! projectName: String!): [Project] # data for the bubble expansion
+  statsProject(projectName: String!): [Int] # time (sec) per user 
+  statsAssignment(assignmentName: String!): [Int] # time (sec) per user
+  users: [User]
+}
+
+type Mutation {
+  createUser(data: CreateUserInput): User!
+  deleteUser(id: ID): String # when no given id, delete all users
+  updateUser(id: ID!, data: UpdateUserInput): User
+  createProject(data: CreateProjectInput): Project!
+  deleteProject(id: ID): String # do nothing when no id given
+  updateProject(id: ID!, data: UpdateProjectInput): Project
+  createAssignment(data: CreateAssignmentInput): Assignment!
+  deleteAssignment(id: ID): String # do nothing when no id given
+  updateAssignment(id: ID!, data: UpdateAssignmentInput): Assignment
+  # createRecord(data: CreateRecordInput): Record!
+  # deleteRecord(id: ID): String # when no given id, delete all users
+  # updateRecord(id: ID!, data: UpdateRecordInput): Record
+
+}
+
+type Subscription {
+  user: UserSubscriptionPayload!,
+  project: ProjectSubscriptionPayload!,
+  assignment: AssignmentSubscriptionPayload!,
+  # record: RecordSubscriptionPayload!
+}
+
+input CreateUserInput {
+  userName: String!
+}
+
+input UpdateUserInput {
+  userName: String
+}
+
+input CreateProjectInput {
+  userID: ID!
+  projectName: String!
+  links: [String]
+}
+
+input UpdateProjectInput { # update with whole links array
+  projectName: String
+  links: [String]
+}
+
+input CreateAssignmentInput {
+  userID: ID!
+  projectID: ID!
+  assignmentName: String!
+  deadline: DateTime
+  isComplete: Boolean
+}
+
+input UpdateAssignmentInput {
+  assignmentName: String
+  deadline: DateTime
+  status: Int
+  isComplete: Boolean
+}
+
+# input CreateRecordInput {
+#   userID: ID!
+#   projectID: ID!
+#   assignmentID: ID!
+#   startAt: DateTime
+#   duration: Int!
+# }
+
+# input UpdateRecordInput {
+#   startAt: DateTime
+#   duration: Int
+# }
+
+input UserInput {
+  userName: String
+  projects: [ProjectInput]
+}
+
+input ProjectInput {
+  projectName: String
+  assignments: [AssignmentInput]
+  links: [String]
+}
+
+input AssignmentInput {
+  assignmentName: String
+  deadline: DateTime
+  record: [RecordInput]
+  status: Int
+  isComplete: Boolean
+}
+
+input RecordInput {
+  startAt: DateTime
+  duration: Int
+}
+
+type User {
+  id: ID!
+  userName: String!
+  projects: [Project]
+}
+
+type Project {
+  id: ID!
+  projectName: String!
+  assignments: [Assignment]
+  links: [String]
+}
+
+type Assignment {
+  id: ID!
+  assignmentName: String!
+  deadline: DateTime
+  record: [Record]
+  status: Int
+  isComplete: Boolean
+}
+
+type Record {
+  startAt: DateTime
+  duration: Int
+}
+
+enum MutationType {
+  CREATED
+  UPDATED
+  DELETED
+}
+
+type UserSubscriptionPayload {
+  mutation: MutationType!
+  data: User
+}
+
+type ProjectSubscriptionPayload {
+  mutation: MutationType!
+  data: Project
+}
+
+type AssignmentSubscriptionPayload {
+  mutation: MutationType!
+  data: Assignment
+}
