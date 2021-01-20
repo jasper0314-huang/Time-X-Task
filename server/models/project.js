@@ -9,10 +9,13 @@ const ProjectSchema = new Schema({
 		type: String,
 		required: [true, 'Title field is required.']
 	},
-	assignments: [{
-		type: mongoose.Types.ObjectId,
-		ref: 'assignment'
-	}],
+	assignments: {
+		type: [{
+			type: mongoose.Types.ObjectId,
+			ref: 'assignment'
+		}],
+		default: []
+	},
 	links: {
 		type: [String],
 		default: []

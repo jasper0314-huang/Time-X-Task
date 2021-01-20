@@ -1,9 +1,25 @@
 const User = require('../models/user')
 const Project = require('../models/project')
 const Assignment = require('../models/assignment');
+const Record = require('../models/record')
 // const { useSubscription } = require('@apollo/react-hooks');
 
 const Query = {
+  async users(parent, args, content, info) {
+    var result = await User.find().populate({
+      path: 'projects',
+      model: 'project',
+      populate: {
+        path: 'assignments',
+        model: 'assignment',
+        populate: {
+          path: 'records',
+          model: 'record'
+        }
+      }
+    });
+    return result;
+  },
   async user(parent, args, content, info) {
     // args: {userName, id}
     var userRet;
@@ -13,7 +29,11 @@ const Query = {
         model: 'project',
         populate: {
           path: 'assignments',
-          model: 'assignment'
+          model: 'assignment',
+          populate: {
+            path: 'records',
+            model: 'record'
+          }
         }
       });
     } else {
@@ -24,7 +44,11 @@ const Query = {
         model: 'project',
         populate: {
           path: 'assignments',
-          model: 'assignment'
+          model: 'assignment',
+          populate: {
+            path: 'records',
+            model: 'record'
+          }
         }
       });
     }
@@ -35,41 +59,22 @@ const Query = {
     // args: {id}
     var projectRet = await (await Project.findOne({ _id: args.id })).populate({
       path: 'assignments',
-      model: 'assignment'
+      model: 'assignment',
+      populate: {
+        path: 'records',
+        model: 'record'
+      }
     })
     // console.log(projectRet);
     return projectRet
-  },
-  // async userProject(parent, args, content, info) {
-  //   // args: {userName, projectName}
-  //   var userInfo = await User.findOne({
-  //     userName: args.userName
-  //   })
-  //   var projectsArr = []
-  //   userInfo.projects.forEach(async projID => {
-  //     var project = await Project.findById(projID)
-  //     project.assignments.forEach(async assignID => {
-  //       var assign = await Assignment.findById(assignID)
-        
-  //     })
-  //   });
-  //   return projectsArr
-  // },
-  async users(parent, args, content, info) {
-    var result = await User.find().populate({
-      path: 'projects',
-      model: 'project',
-      populate: {
-        path: 'assignments',
-        model: 'assignment'
-      }
-    });
-    return result;
   },
   async assignment(parent, args, content, info) {
     // console.log(args);
     var result = await Assignment.findOne({
       _id: args.id
+    }).populate({
+      path: 'records',
+      model: 'record'
     })
     return result
   },

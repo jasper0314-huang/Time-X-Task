@@ -7,16 +7,16 @@ const AssignmentSchema = new Schema({
 		type: String,
 		required: [true, 'name field is required.']
 	},
+	projectNmae: {
+		type: String
+	},
 	deadline: {
 		type: Date,
 	},
-	record: {
+	records: {
 		type: [{
-			startAt: Date,
-			duration: {
-				type: Number,
-				default: 0
-			}
+			type: mongoose.Types.ObjectId,
+			ref: 'record'
 		}],
 		default: []
 	},

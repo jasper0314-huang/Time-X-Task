@@ -10,16 +10,16 @@ const Subscription = {
       return pubSub.asyncIterator('user');
     }
   },
-  project: {
-    subscribe(parent, args, pubSub, info) {
-      return pubSub.asyncIterator('project');
-    }
-  },
-  assignment: {
-    subscribe(parent, args, pubSub, info) {
-      return pubSub.asyncIterator('assignment');
-    }
-  }
+  // project: {
+  //   subscribe(parent, args, pubSub, info) {
+  //     return pubSub.asyncIterator('project');
+  //   }
+  // },
+  // assignment: {
+  //   subscribe(parent, args, pubSub, info) {
+  //     return pubSub.asyncIterator('assignment');
+  //   }
+  // }
 }
 
 module.exports = Subscription
