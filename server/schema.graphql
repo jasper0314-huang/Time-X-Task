@@ -5,8 +5,9 @@ type Query {
   project(id: ID!): Project
   assignment(id: ID!): Assignment
   userProject(userName: String! projectName: String!): [Project] # data for the bubble expansion
-  statsProject(projectName: String!): [Int] # time (sec) per user 
-  statsAssignment(assignmentName: String!): [Int] # time (sec) per user
+  projectNames: [{ String Int}]
+  assignmentNames(projectName: String): [String] # when no given projectName, return all projectNames
+  searchStats(projectName: String! assignmentName: String): [Int]
   users: [User]
 }
 
