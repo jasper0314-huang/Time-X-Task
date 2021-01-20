@@ -1,5 +1,5 @@
 import React, { useEffect, useCallback, useRef, useState } from 'react'
-import { useQuery, useMutation } from '@apollo/react-hooks'
+import { useQuery } from '@apollo/react-hooks'
 import './App.css'
 import 'antd/dist/antd.css'; 
 import { Button, Input, Tag } from 'antd'
@@ -13,11 +13,18 @@ import {
 } from '../../graphql'
 
 function App() {
-  var variables = { userName: "A" }
+  // var variables = { userName: "A" }
+  const [user, setUser] = useState("");
+  const [changepage, setChangepage] = useState(true);
   const { loading, error, data, subscribeToMore } = useQuery(USER_QUERY, {
-    variables: variables
+    variables: { userName: user }
   });
-  const [changepage, setChangepage] = useState(false);
+
+  const checkLogging = (event) => {
+    const name = event.target.parentNode.childNodes[1].value;
+    setUser(name);
+    event.target.parentNode.childNodes[1].value = "";
+  }
 
   useEffect(() => {
     subscribeToMore({
@@ -37,21 +44,37 @@ function App() {
   }
   // console.log(data);
   return (
-    <div className="App">
-      <Button onClick={tmp} >Switch</Button>
-      <div>
-        {loading ? (<div>Loading...</div>) : changepage ? ( 
+    <>
+    {
+      (user === "" || data.user === null)? (
+        <div className="Logging">
+          <Tag for="logging">User Name:</Tag>
+          <input type="text" id="logging" name="logging" />
+          <input type="submit" value="Submit" onClick={checkLogging} />
+        </div>
+      ) : (
+        <div className="App">
+          <Button onClick={tmp} >Switch</Button>
           <div>
-            <Search />
-          </div>
-        ) : (
-          <div>
+<<<<<<< HEAD
             {/* <BallPool user={data.user} /> */}
             <GlobalBall user={data.user} />
+=======
+            {loading ? (<div>Loading...</div>) : changepage ? ( 
+              <div>
+                <Search />
+              </div>
+            ) : (
+              <div>
+                <BallPool user={data.user} />
+              </div>
+            )}
+>>>>>>> be4fa32a204cb2d03aa0823cf015f9268a84a13f
           </div>
-        )}
-      </div>
-    </div>
+        </div>
+      )
+    }
+    </>
   )
 }
 

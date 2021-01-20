@@ -25,16 +25,16 @@ const todoItem = ({ assignment, deleteItem, completeItem }) => {
     const isComplete = assignment.isComplete
     const deadline_display = assignment.deadline? (new Date(assignment.deadline)).toLocaleString() : "";
     return (
-        <li className="todo-app__item" id={id}>
+        <li className="todo-app__item" id={id + "_item"}>
             <div className="todo-app__checkbox">
                 <input id={id + "_id"} type="checkbox" onClick={completeItem(id, isComplete)} checked={isComplete}></input>
                 <label htmlFor={id + "_id"}></label>
             </div>
             <h3 className="todo-app__item-detail">
-                <span style={{ padding: "0px 100px 0px 0px" }}>{assignment.assignmentName}</span>
-                <span>{deadline_display}</span>
+                <div id="item__assignment">{assignment.assignmentName}</div>
+                <div id="item__deadline">{deadline_display}</div>
             </h3>
-            <img src={Img} className="todo-app__item-x" alt="X" onClick={deleteItem(id)}></img>
+            <img src={Img} className="todo-app__item-x" id={id + "_img"} alt="X" onClick={deleteItem(id)}></img>
         </li>
     );
 };
