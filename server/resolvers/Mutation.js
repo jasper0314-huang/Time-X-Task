@@ -207,7 +207,7 @@ const Mutation = {
         { arrayFilters: [{ "a._id": id }] }
       )
     }
-    if (data.isComplete) {
+    if (data.isComplete !== undefined) {
       await Assignment.updateOne({ _id: id },
         { $set: { "isComplete": data.isComplete } }
       )
