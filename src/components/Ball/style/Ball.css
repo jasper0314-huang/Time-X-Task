@@ -1,8 +1,6 @@
 :root {
     --width: 1100px;
     --height: 400px;
-
-    --todolist_width: 700px;
 }
 
 .outside__box {
@@ -10,25 +8,12 @@
     flex-direction: column;
 }
 
-.inside__box1 {
-    display: flex;
-    flex-direction: row;
-}
-
 .todolist__root {
     border-width: 3px;
     border-style: solid;
     border-color: blueviolet;
     height: var(--height);
-    width: var(--todolist_width);
-}
-
-.calendar__root {
-    border-width: 3px;
-    border-style: solid;
-    border-color: blue;
-    height: var(--height);
-    width: calc(var(--width) - var(--todolist_width));
+    width: var(--width);
 }
 
 .record__root {

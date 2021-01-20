@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import TodoList from "./TodoList/TodoList"
-import Calendar from "./Calendar/Calendar"
 import LinkBar from "./LinkBar/LinkBar"
 import Record from "./Record/Record"
 import "./style/Ball.css"
@@ -37,30 +36,22 @@ import 'react-calendar/dist/Calendar.css';
 
 const Ball = ({ userID, project }) => {
 
-    const [value, onChange] = useState(new Date());
-
     return (
         <>
         <h1>{project.projectName}</h1>
         <div className="outside__box">
-            <div className="inside__box1">
-                <div className="todolist__root">
-                    <TodoList
-                        userID={userID}
-                        projectID={project.id}
-                        assignments={project.assignments} 
-                    />
-                </div>
-                <div className="calendar__root">
-                    <Calendar
-                        onChange={onChange}
-                        value={value}
-                    />
-                </div>
+            <div className="todolist__root">
+                <TodoList
+                    userID={userID}
+                    projectID={project.id}
+                    assignments={project.assignments} 
+                />
             </div>
+
             <div className="record__root">
                 <Record />
             </div>
+
             <div className="linkbar__root">
                 <LinkBar links={project.links} />
             </div>

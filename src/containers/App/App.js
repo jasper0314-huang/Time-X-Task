@@ -17,7 +17,7 @@ import {
 } from '../../graphql'
 
 function App() {
-  var variables = { userName: "Tien" }
+  var variables = { userName: "A" }
   const { loading, error, data, subscribeToMore } = useQuery(USER_QUERY, {
     variables: variables
   });
