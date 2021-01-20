@@ -41,8 +41,24 @@ const DELETE_ASSIGNMENT_MUTATION = gql`
     )
   }
 `
+
+const CREATE_RECORD_MUTATION = gql`
+  mutation createRecord(
+    $userID: ID!
+    $data: CreateRecordInput
+  ) {
+    createRecord(
+      userID: $userID
+      data: $data
+    ) {
+      duration
+    }
+  }
+`
+
 export { 
   CREATE_ASSIGNMENT_MUTATION, 
   UPDATE_ASSIGNMENT_MUTATION,
-  DELETE_ASSIGNMENT_MUTATION
+  DELETE_ASSIGNMENT_MUTATION,
+  CREATE_RECORD_MUTATION
 }

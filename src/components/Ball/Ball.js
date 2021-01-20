@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
+import { useMutation } from '@apollo/react-hooks'
 import TodoList from "./TodoList/TodoList"
 import LinkBar from "./LinkBar/LinkBar"
 import Record from "./Record/Record"
 import "./style/Ball.css"
 import 'react-calendar/dist/Calendar.css';
+import {
+    CREATE_RECORD_MUTATION
+} from "../../graphql"
 
 import ReactStopwatchTimer from "../timer/ReactTimerStopwatch";
 
@@ -28,7 +32,10 @@ import ReactStopwatchTimer from "../timer/ReactTimerStopwatch";
                 "second": 0,
                 "formatted": "1992-10-09T00:00:00Z"
             },
-            "record": [],
+            "records": [{
+                "startAt": "",
+                "duration": 10
+            }],
             "status": null,
             "isComplete": null
         }
@@ -37,18 +44,53 @@ import ReactStopwatchTimer from "../timer/ReactTimerStopwatch";
 */
 
 const Ball = ({ userID, project }) => {
-    const fromTime = new Date(0, 0, 0, 0, 0, 0, 0);
     const [timing, setTiming] = useState(false);
+    const [startTime, setStartTime] = useState(0);
+    const [createRecord] = useMutation(CREATE_RECORD_MUTATION)
+    const [intervalId, setintervalId] = useState(0);
 
     const timingFunc = (assignmentID) => {
         return (event) => {
             if (timing) {
+                clearInterval(intervalId);
+                // mutation
+                console.log(startTime);
+                const duration = parseInt((Date.now() - startTime) / 1000);
+                const ISO = (new Date(startTime)).toISOString();
+
+                createRecord({
+                    variables: {
+                        userID: userID,
+                        data: {
+                            assignmentID: assignmentID,
+                            startAt: ISO,
+                            duration: duration
+                        }
+                    }
+                })
+
                 setTiming(false);
             } else {
+                setStartTime(Date.now());
                 setTiming(true);
             }
         }
     }
+
+    const project2records = (project) => {
+        let ret  = [];
+        for (let assign of project.assignments) {
+            for (let record of assign.records) {
+                ret.push({
+                    "assignmentName": assign.assignmentName,
+                    "startAt": record.startAt,
+                    "duration": record.duration
+                })
+            }
+        }
+        return ret;
+    }
+
 
     return (
         <>
@@ -68,16 +110,16 @@ const Ball = ({ userID, project }) => {
                 {
                     timing? (
                         <ReactStopwatchTimer
-                            isOn={true}
+                            isOn={timing}
                             className="react-stopwatch-timer__table"
                             watchType="stopwatch"
                             displayCircle={true} 
                             color="gray" 
                             hintColor="red" 
-                            fromTime={fromTime}
+                            setintervalId={setintervalId}
                         />
                     ) : (
-                        <Record />
+                        <Record records={project2records(project)} />
                     )
                 }
                 </div>
