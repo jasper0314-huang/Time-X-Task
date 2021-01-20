@@ -8,10 +8,22 @@ const Mutation = {
   createUser: async (_, { data }, pubSub, info) => {
     const newUser = new User({ userName: data.userName, projects: []});
     const error = await newUser.save();
+    var result = await User.findById(newUser._id).populate({
+      path: 'projects',
+      model: 'project',
+      populate: {
+        path: 'assignments',
+        model: 'assignment',
+        populate: {
+          path: 'records',
+          model: 'record'
+        }
+      }
+    });
     pubSub.publish('user', {
       user: {
         mutation: "CREATED",
-        data: newUser
+        data: result
       }
     })
 
@@ -30,27 +42,16 @@ const Mutation = {
     });
   },
   deleteUser: async (_, { id }, pubSub, info) => {
-    if (id) {
-      await User.deleteOne({
-        _id: id
-      })
-      pubSub.publish('user', {
-        user: {
-          mutation: "DELETED",
-          data: {}
-        }
-      })
-      return `userID: ${id} deleted!!`;
-    } else {
-      await User.deleteMany();
-      pubSub.publish('user', {
-        user: {
-          mutation: "DELETED",
-          data: {}
-        }
-      })
-      return `Delete all Users`
-    }
+    await User.deleteOne({
+      _id: id
+    })
+    pubSub.publish('user', {
+      user: {
+        mutation: "DELETED",
+        data: {}
+      }
+    })
+    return `userID: ${id} deleted!!`;
   },
   updateUser: async (_, { id, data }, pubSub, info) => {
     await User.updateOne(
@@ -81,42 +82,60 @@ const Mutation = {
     const newProject = new Project({ projectName: data.projectName });
     const error = await newProject.save();
     if (error) console.log(error);
-    // console.log(newProject);
-    // console.log(newProject._id);
     await User.updateOne(
       { _id: data.userID },
       { $push: { projects: newProject._id } }
     )
-    // pubSub.publish('user', {
-    //   project: {
-    //     mutation: "CREATED",
-    //     data: newProject
-    //   }
-    // })
+    const userSubscript = await User.findById(data.userID).populate({
+      path: 'projects',
+      model: 'project',
+      populate: {
+        path: 'assignments',
+        model: 'assignment',
+        populate: {
+          path: 'records',
+          model: 'record'
+        }
+      }
+    })
+    pubSub.publish('user', {
+      user: {
+        mutation: "UPDATED",
+        data: userSubscript
+      }
+    })
 
     return newProject;
   },
-  deleteProject: async (_, { id }, pubSub, info) => {
-    if (id) {
-      await Project.deleteOne({
-        _id: id
-      });
-      await User.updateMany(
-        {},
-        { "$pull": { "projects": {"_id": id} } }
-      )
-      // pubSub.publish('project', {
-      //   project: {
-      //     mutation: "DELETED",
-      //     data: {}
-      //   }
-      // })
-      return `delete project id: ${id}`
-    } else {
-      return `No projectID input`
-    }
+  deleteProject: async (_, { userID, id }, pubSub, info) => {
+    await Project.deleteOne({
+      _id: id
+    });
+    await User.updateOne(
+      { _id: userID },
+      { "$pull": { "projects": {"_id": id} } }
+    )
+    const userSubscript = await User.findById(userID).populate({
+      path: 'projects',
+      model: 'project',
+      populate: {
+        path: 'assignments',
+        model: 'assignment',
+        populate: {
+          path: 'records',
+          model: 'record'
+        }
+      }
+    });
+    pubSub.publish('user', {
+      user: {
+        mutation: "UPDATED",
+        data: userSubscript
+      }
+    })
+    return `delete project id: ${id}`
   },
-  updateProject: async (_, { id, data }, pubSub, info) => {
+  updateProject: async (_, { userID, id, data }, pubSub, info) => {
     if (data.projectName) {
       await Project.updateOne({ _id: id },
         { $set: { "projectName": data.projectName } }
@@ -127,16 +146,27 @@ const Mutation = {
         {links: data.links })
     }
     const projectRet = Project.findById(id);
-
-    // pubSub.publish('project', {
-    //   project: {
-    //     mutation: "UPDATED",
-    //     data: projectRet
-    //   }
-    // })
+    const userSubscript = await User.findById(userID).populate({
+      path: 'projects',
+      model: 'project',
+      populate: {
+        path: 'assignments',
+        model: 'assignment',
+        populate: {
+          path: 'records',
+          model: 'record'
+        }
+      }
+    });
+    pubSub.publish('user', {
+      user: {
+        mutation: "UPDATED",
+        data: userSubscript
+      }
+    })
     return projectRet
   },
-  createAssignment: async (_, { data }, pubSub, info) => {
+  createAssignment: async (_, { userID, data }, pubSub, info) => {
     const project = Project.findById(data.projectID);
     const newAssignment = new Assignment({ assignmentName: data.assignmentName, projectName: project.projectName});
     const error = await newAssignment.save();
@@ -145,39 +175,55 @@ const Mutation = {
       { _id: data.projectID },
       { $push: { "assignments": newAssignment._id } }
     )
-
-    // pubSub.publish('assignment', {
-    //   assignment: {
-    //     mutation: "CREATED",
-    //     data: newAssignment
-    //   }
-    // })
-
+    const userSubscript = await User.findById(userID).populate({
+      path: 'projects',
+      model: 'project',
+      populate: {
+        path: 'assignments',
+        model: 'assignment',
+        populate: {
+          path: 'records',
+          model: 'record'
+        }
+      }
+    });
+    pubSub.publish('user', {
+      user: {
+        mutation: "UPDATED",
+        data: userSubscript
+      }
+    })
     return newAssignment;
   },
-  deleteAssignment: async (_, { id }, pubSub, info) => {
-    if (id) {
-      await Assignment.deleteOne({
-        _id: id
-      })
-      await Project.updateMany(
-        {},
-        { "$pull": { "assignments": {"_id": id} } }
-      )
-
-      // pubSub.publish('assignment', {
-      //   assignment: {
-      //     mutation: "DELETED",
-      //     data: {}
-      //   }
-      // })
-      return `delete assignment id: ${id}`
-    } else {
-      // await Assignment.deleteMany();
-      return `No assignment id input`
-    }
-  }, // can't delete assignment since the time record should be preserve
-  updateAssignment: async (_, { id, data }, pubSub, info) => {
+  deleteAssignment: async (_, { userID, id }, pubSub, info) => {
+    await Assignment.deleteOne({
+      _id: id
+    })
+    await Project.updateMany(
+      {},
+      { "$pull": { "assignments": {"_id": id} } }
+    )
+    const userSubscript = await User.findById(userID).populate({
+      path: 'projects',
+      model: 'project',
+      populate: {
+        path: 'assignments',
+        model: 'assignment',
+        populate: {
+          path: 'records',
+          model: 'record'
+        }
+      }
+    });
+    pubSub.publish('user', {
+      user: {
+        mutation: "UPDATED",
+        data: userSubscript
+      }
+    })
+    return `delete assignment id: ${id}`
+  },
+  updateAssignment: async (_, { userID, id, data }, pubSub, info) => {
     if (data.assignmentName) {
       await Assignment.updateOne({ _id: id },
         { $set: { "assignmentName": data.assignmentName } }
@@ -199,15 +245,27 @@ const Mutation = {
       )
     }
     const assignmentRet = Assignment.findById(id);
-    // pubSub.publish('assignment', {
-    //   project: {
-    //     mutation: "UPDATED",
-    //     data: assignmentRet
-    //   }
-    // })
+    const userSubscript = await User.findById(userID).populate({
+      path: 'projects',
+      model: 'project',
+      populate: {
+        path: 'assignments',
+        model: 'assignment',
+        populate: {
+          path: 'records',
+          model: 'record'
+        }
+      }
+    });
+    pubSub.publish('user', {
+      user: {
+        mutation: "UPDATED",
+        data: userSubscript
+      }
+    })
     return assignmentRet
   },
-  createRecord: async (_, { data }, pubSub, info) => {
+  createRecord: async (_, { userID, data }, pubSub, info) => {
     const newRecord = new Record({ startAt: data.startAt, duration: data.duration })
     const error = await newRecord.save();
     if (error) console.log(error);
@@ -215,23 +273,55 @@ const Mutation = {
       { _id: data.assignmentID },
       { $push: { "records": newRecord._id } }
     )
+    const userSubscript = await User.findById(userID).populate({
+      path: 'projects',
+      model: 'project',
+      populate: {
+        path: 'assignments',
+        model: 'assignment',
+        populate: {
+          path: 'records',
+          model: 'record'
+        }
+      }
+    });
+    pubSub.publish('user', {
+      user: {
+        mutation: "UPDATED",
+        data: userSubscript
+      }
+    })
     return newRecord;
   },
-  deleteRecord: async (_, { id }, pubSub, info) => {
-    if (id) {
-      await Record.deleteOne({
-        _id: id
-      })
-      await Assignment.updateMany(
-        {},
-        { "$pull": { "records": {"_id": id} } }
-      )
-      return `delete record id: ${id}`
-    } else {
-      return `No record id input`
-    }
-  }, // can't delete assignment since the time record should be preserve
-  updateRecord: async (_, { id, data }, pubSub, info) => {
+  deleteRecord: async (_, { userID, id }, pubSub, info) => {
+    await Record.deleteOne({
+      _id: id
+    })
+    await Assignment.updateMany(
+      {},
+      { "$pull": { "records": {"_id": id} } }
+    )
+    const userSubscript = await User.findById(userID).populate({
+      path: 'projects',
+      model: 'project',
+      populate: {
+        path: 'assignments',
+        model: 'assignment',
+        populate: {
+          path: 'records',
+          model: 'record'
+        }
+      }
+    });
+    pubSub.publish('user', {
+      user: {
+        mutation: "UPDATED",
+        data: userSubscript
+      }
+    })
+    return `delete record id: ${id}`
+  },
+  updateRecord: async (_, { userID, id, data }, pubSub, info) => {
     if (data.startAt) {
       await Record.updateOne({ _id: id },
         { $set: { "startAt": data.startAt } }
@@ -242,9 +332,33 @@ const Mutation = {
         { $set: { "duration": data.duration } }
       )
     }
-  
-    const recoreRet = Record.findById(id);
-    return recoreRet
+    const recordRet = Record.findById(id);
+    const userSubscript = await User.findById(userID).populate({
+      path: 'projects',
+      model: 'project',
+      populate: {
+        path: 'assignments',
+        model: 'assignment',
+        populate: {
+          path: 'records',
+          model: 'record'
+        }
+      }
+    });
+    pubSub.publish('user', {
+      user: {
+        mutation: "UPDATED",
+        data: userSubscript
+      }
+    })
+    return recordRet
+  },
+  clearCluster: async (_, __, pubSub, info) => {
+    await Record.deleteMany({})
+    await Assignment.deleteMany({})
+    await Project.deleteMany({})
+    await User.deleteMany({})
+    return "Cluster are clean now~"
   }
 }
 

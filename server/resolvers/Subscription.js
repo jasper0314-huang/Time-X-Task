@@ -9,7 +9,7 @@ const Subscription = {
       // console.log(pubSub);
       return pubSub.asyncIterator('user');
     }
-  },
+  }
   // project: {
   //   subscribe(parent, args, pubSub, info) {
   //     return pubSub.asyncIterator('project');

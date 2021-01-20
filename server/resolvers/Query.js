@@ -2,7 +2,6 @@ const User = require('../models/user')
 const Project = require('../models/project')
 const Assignment = require('../models/assignment');
 const Record = require('../models/record')
-// const { useSubscription } = require('@apollo/react-hooks');
 
 const Query = {
   async users(parent, args, content, info) {

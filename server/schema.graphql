@@ -12,24 +12,22 @@ type Query {
 
 type Mutation {
   createUser(data: CreateUserInput): User
-  deleteUser(id: ID): String # when no given id, delete all users
+  deleteUser(id: ID!): String
   updateUser(id: ID!, data: UpdateUserInput): User
   createProject(data: CreateProjectInput): Project!
-  deleteProject(id: ID): String # do nothing when no id given
-  updateProject(id: ID!, data: UpdateProjectInput): Project!
-  createAssignment(data: CreateAssignmentInput): Assignment!
-  deleteAssignment(id: ID): String # do nothing when no id given
-  updateAssignment(id: ID!, data: UpdateAssignmentInput): Assignment!
-  createRecord(data: CreateRecordInput): Record
-  deleteRecord(id: ID): String # when no given id, delete all users
-  updateRecord(id: ID!, data: UpdateRecordInput): Record
+  deleteProject(userID: ID!, id: ID!): String
+  updateProject(userID: ID!, id: ID!, data: UpdateProjectInput): Project!
+  createAssignment(userID: ID!, data: CreateAssignmentInput): Assignment!
+  deleteAssignment(userID: ID!, id: ID!): String
+  updateAssignment(userID: ID!, id: ID!, data: UpdateAssignmentInput): Assignment!
+  createRecord(userID: ID!, data: CreateRecordInput): Record
+  deleteRecord(userID: ID!, id: ID!): String
+  updateRecord(userID: ID!, id: ID!, data: UpdateRecordInput): Record
+  clearCluster: String
 }
 
 type Subscription {
   user: UserSubscriptionPayload!,
-  # project: ProjectSubscriptionPayload!,
-  # assignment: AssignmentSubscriptionPayload!,
-  # record: RecordSubscriptionPayload!
 }
 
 input CreateUserInput {
@@ -115,18 +113,3 @@ type UserSubscriptionPayload {
   mutation: MutationType!
   data: User
 }
-
-# type ProjectSubscriptionPayload {
-#   mutation: MutationType!
-#   data: Project
-# }
-
-# type AssignmentSubscriptionPayload {
-#   mutation: MutationType!
-#   data: Assignment
-# }
-
-# type RecordSubscriptionPayload {
-#   mutation: MutationType!
-#   data: Record
-# }
