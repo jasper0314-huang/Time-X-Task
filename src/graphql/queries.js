@@ -40,4 +40,35 @@ const PROJECTNAMES_QUERY = gql`
   }
 `
 
-export { USER_QUERY, PROJECTNAMES_QUERY};
+const ASSIGNMENTNAMES_QUERY = gql`
+  query assignmentNames (
+    $projectName: String
+  ) {
+    assignmentNames (
+      projectName: $projectName
+    ) {
+      name
+      count
+    }
+  }
+`
+
+const SEARCHSTATS_QUERY = gql`
+  query searchStats (
+    $projectName: String!
+    $assignmentName: String
+  ) {
+    searchStats (
+      projectName: $projectName
+      assignmentName: $assignmentName
+    )
+  }
+
+`
+
+export { 
+  USER_QUERY, 
+  PROJECTNAMES_QUERY, 
+  ASSIGNMENTNAMES_QUERY, 
+  SEARCHSTATS_QUERY
+};

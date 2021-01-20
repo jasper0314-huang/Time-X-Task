@@ -5,6 +5,7 @@ import parse from 'autosuggest-highlight/parse';
 import match from 'autosuggest-highlight/match';
 
 export function Highlights(props) {
+  const value = (props.value) ? undefined : {name: props.value, count: 1};
   return (
     <Autocomplete
       id="highlights-demo"
@@ -14,14 +15,16 @@ export function Highlights(props) {
       renderInput={(params) => (
         <TextField {...params} label={props.label} variant="outlined" margin="normal" />
       )}
-      Value={props.Value}
       onChange={(event, newValue) => {
         if (newValue) {
           props.setValue(newValue.name);
+          props.setValueAssign('');
         } else {
-          props.setValue(undefined);
+          props.setValue('');
+          props.setValueAssign('');
         }
       }}
+      // value={value}
       autoHighlight={true}
       autoSelect={true}
       renderOption={(option, { inputValue }) => {

@@ -90,6 +90,9 @@ const Query = {
     return project_names
   },
   async assignmentNames(parent, { projectName }, content, info) {
+    if (!projectName) {
+      return [];
+    }
     var name_set = new Set();
     let projects = await Project.find({
       "projectName": projectName

@@ -5,9 +5,13 @@ import { font, svgFont, label, size, color, chartTheme, allColors } from '@data-
 
 export class MyHistogram extends Component {
 	render() {
-		const rawData = Array(100).fill().map(() => Math.round(Math.random() * 100) / 10);
-		// const rawData = [132,213,123,3445,1232,324,32,132,13,132,132,1321,43,23,334,324,24,2453]
-		console.log(rawData);
+		// const rawData = Array(100).fill().map(() => Math.round(Math.random() * 100) / 10);
+		// const rawData = (this.props.data !== [] || this.props.data === undefined) ? 
+		// 	(this.props.data) : 
+		// 	(Array(100).fill().map(() => Math.round(Math.random() * 100) / 10));
+		// const rawData = [1,2,3];
+		const rawData = this.props.data;
+		console.log(this.props.data);
 		// const data = this.props.data;
 		// console.log(data);
 		return (
@@ -35,6 +39,7 @@ export class MyHistogram extends Component {
 			<DensitySeries animated rawData={rawData} />
 			<XAxis
 			  label="hrs"
+			  fontsize={20}
 			/>
 			<YAxis
 			  label="#people"

@@ -15,53 +15,101 @@ import Pie2 from '../components/Search/Pie_canvas';
 //          input: projectname, assignmentname
 //          output: array of int (seconds) 
 
-import { PROJECTNAMES_QUERY } from '../graphql'
+import { 
+  PROJECTNAMES_QUERY,
+  ASSIGNMENTNAMES_QUERY,
+  SEARCHSTATS_QUERY
+} from '../graphql'
 
 function Search() {
-  const [findProject, setFindProject] = useState(undefined);
-  const [findAssignment, setFindAssignment] = useState(undefined);
+  const [findProject, setFindProject] = useState('');
+  const [findAssignment, setFindAssignment] = useState('');
   // const data = this.props.data;
-
+  
   const ProjectNames = useQuery(PROJECTNAMES_QUERY);
-  // const AssignmentNames = useQuery(PROJECTNAMES_QUERY).data;
-  // useEffect(() => { refetch() }, [findProject])
+  const AssignmentNames = useQuery(ASSIGNMENTNAMES_QUERY, {
+    variables: {projectName: findProject},
+    // pollInterval: 500, // Update every 500ms
+  });
+  // useEffect(() => { AssignmentNames.refetch() }, [findProject])
+  const SearchStats = useQuery(SEARCHSTATS_QUERY, {
+    variables: {
+      projectName: findProject,
+      assignmentName: findAssignment
+    },
+  });
+
   const ClickSearch = () => {
     // console.log("Search");
-    // console.log(ProjectNames.data);
-    // console.log(ProjectNames.loading);
-    // console.log(ProjectNames.data.projectNames);
+    // console.log(SearchStats.data.searchStats);
+    // console.log(SearchStats.loading);
+  }
+
+  const ProjectDataCall = () => {
+    if (!ProjectNames.loading) {
+      return ProjectNames.data.projectNames;
+    }
+    return [];
+  }
+
+  const AssignmentDataCall = () => {
+    if (!AssignmentNames.loading) {
+      return AssignmentNames.data.assignmentNames;
+    }
+    return [];
+  }
+
+  const SearchStatsDataCall = () => {
+    if (!SearchStats.loading && findProject && findAssignment) {
+      console.log("searchStats");
+      console.log(SearchStats.data.searchStats);
+      if (SearchStats.data.searchStat !== []) {
+        return (
+            <div className="Histogram__container">
+              <MyHistogram data={SearchStats.data.searchStats}/>
+            </div>
+        )
+      }
+    }
+    return (<div></div>);
   }
 
   return (
     <div>
       <h1>What SECRET do you want to know?</h1>
-      { ProjectNames.loading ? (<div> Loading... </div>) : (
-        <div>
+      <div>
           <div className="SearchBox__container">
             <div className="SearchBox">
-              <Highlights label="Project Name" data={ProjectNames.data.projectNames} setValue={setFindProject} Value={findProject}></Highlights>
+              <Highlights 
+                label="Project Name" 
+                data={ProjectDataCall()} 
+                setValue={setFindProject} 
+                setValueAssign={setFindAssignment} 
+                value={findProject}
+              ></Highlights>
             </div>
             <div className="SearchBox">
-              <Highlights label="Assignment Name" data={[]} setValue={setFindAssignment} Value={findAssignment}></Highlights>
+              <Highlights
+                label="Assignment Name"
+                data={AssignmentDataCall()}
+                setValue={setFindAssignment}
+                setValueAssign={()=>{}}
+                value={findAssignment}
+              ></Highlights>
             </div>
-            <div className="SearchBox">
+            {/* <div className="SearchBox">
               <div>
                 <Button variant="contained" color="primary" fullWidth={true} onClick={ClickSearch}>
                   Search
                 </Button>
               </div>
-            </div>
+            </div> */}
           </div>
-          <div className="Histogram__container">
-            <MyHistogram />
-          </div>
+          { SearchStatsDataCall() }
           {/* <div className="pie__container">
             <Pie />
           </div> */}
         </div>
-
-      )}
-
     </div>
   )
 }
