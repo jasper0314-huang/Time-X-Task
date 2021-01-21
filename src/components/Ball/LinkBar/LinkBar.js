@@ -45,7 +45,7 @@ const LinkBar = ({ links, userID, projectID }) => {
     return (
         <div className="linkbar__main">
             <div className="link__info">
-                <h1 for="adddlink" id="addlink__text">Add link: </h1>
+                <h1 htmlFor="adddlink" id="addlink__text">Add link: </h1>
                 <input type="text" id="addlink" placeholder="https://" />
                 <input type="submit" value="Add" onClick={addLink} />
             </div>
