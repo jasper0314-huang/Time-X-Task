@@ -49,7 +49,7 @@ const renderCustomizedLabel = ({
         <Tooltip content={<CustomTooltip />} />
         <Pie
           data={data}
-          cx={330}
+          cx={280}
           cy={100}
           labelLine={false}
           label={renderCustomizedLabel}
