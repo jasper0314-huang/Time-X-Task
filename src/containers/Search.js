@@ -58,7 +58,7 @@ function Search() {
   }
 
   const SearchStatsDataCall = () => {
-    if (!SearchStats.loading && findProject && findAssignment) {
+    if (!SearchStats.loading && findProject) {
       console.log("searchStats");
       console.log(SearchStats.data.searchStats);
       if (SearchStats.data.searchStat !== []) {
