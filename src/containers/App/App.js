@@ -202,11 +202,11 @@ function App() {
                 <div className="BallPoll__container">
                   <BallPool user={data.user} />
                 </div>
-                {/* <div className="switchPage">
+                <div className="switchPage">
                   <IconButton>
                     <SearchIcon onClick={tmp} style={{ fontSize: 50 }} />
                   </IconButton>
-                </div> */}
+                </div>
                 {/* <GlobalBall user={data.user} /> */}
               </div>
             )}
