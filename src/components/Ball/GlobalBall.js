@@ -5,15 +5,8 @@ import LinkBar from "./LinkBar/LinkBar"
 import Record from "./Record/Record"
 import "./style/Ball.css"
 import 'react-calendar/dist/Calendar.css';
-// import Pie from "./Pie_minimal"
-// import Pie2 from "./Pie_canvas"
 import MyPie from "./MyPie"
 
-// import {
-//     CREATE_RECORD_MUTATION
-// } from "../../graphql"
-
-// import ReactStopwatchTimer from "../timer/ReactTimerStopwatch";
 
 const GlobalBall = ({ user }) => {
     

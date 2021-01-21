@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  PieChart, Pie, Sector, Cell,
+  PieChart, Pie, Sector, Cell, Legend, Tooltip
 } from 'recharts';
 
 // const data = [
@@ -27,24 +27,42 @@ const renderCustomizedLabel = ({
     );
   };
   
+  const CustomTooltip = ({ active, payload, label }) => {
+    if (active) {
+        return (
+            <div className="custom-tooltip" style={{ backgroundColor: '#ffff', padding: '5px', border: '1px solid #cccc' }}>
+                <label>{`${payload[0].name} : ${payload[0].value}%`}</label>
+            </div>
+        );
+    }
+
+    return null;
+  };
+
   export default function MyPie({data}) {
     console.log(data);
     return (
-      <PieChart width={600} height={600}>
-      <Pie
-        data={data}
-        cx={350}
-        cy={130}
-        labelLine={false}
-        label={renderCustomizedLabel}
-        outerRadius={130}
-        fill="#8884d8"
-        dataKey="value"
-      >
-        {
-          data.map((entry, index) => <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />)
-        }
-      </Pie>
-    </PieChart>
+      <div>
+        <h1>Time Spent in My Week</h1>
+        <PieChart width={600} height={600}>
+        <Legend layout="vertical" verticalAlign="top" align="right" />
+        <Tooltip content={<CustomTooltip />} />
+        <Pie
+          data={data}
+          cx={330}
+          cy={100}
+          labelLine={false}
+          label={renderCustomizedLabel}
+          outerRadius={100}
+          fill="#8884d8"
+          dataKey="value"
+        >
+          {
+            data.map((entry, index) => <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />)
+          }
+        </Pie>
+      </PieChart>
+
+      </div>
   );
 }

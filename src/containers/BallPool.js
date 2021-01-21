@@ -44,9 +44,7 @@ const BallPool = ({ user }) => {
       </div>
       <div>
         {(focusProject === -1) ? (
-          <GlobalBall>
-
-          </GlobalBall>
+          <GlobalBall user={user}/>
         ) : (
           <Ball userID={user.id} project={user.projects[focusProject]} />
         )}
