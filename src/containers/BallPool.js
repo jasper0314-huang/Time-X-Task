@@ -1,9 +1,7 @@
 import Ball from "../components/Ball/Ball"
 import React, { useState } from 'react'
 import { Menu } from 'antd'
-// import {  }
 
-// const { SubMenu  } = Menu;
 
 const BallPool = ({ user }) => {
   const [focusProject, setFocusProject] = useState(-1)
@@ -22,13 +20,24 @@ const BallPool = ({ user }) => {
         </h1>
       </div>
       <div>
-        <Menu onClick={handleClick} selectedKeys={[focusProject]} mode="horizontal">
+        {/* <Menu onClick={handleClick} selectedKeys={[focusProject]} mode="horizontal">
           {user.projects.map( (project_i, i) => (
             <Menu.Item key={i}>
                 { project_i.projectName }
             </Menu.Item>
-          ))}
-        </Menu>
+          ))
+          }
+        </Menu> */}
+
+        <div onClick={handleClick} selectedKeys={[focusProject]} mode="horizontal">
+          {user.projects.map( (project_i, i) => (
+            <div key={i}>
+                { project_i.projectName }
+            </div>
+          ))
+          }
+        </div>
+
       </div>
       <div>
         {(focusProject === -1) ? (

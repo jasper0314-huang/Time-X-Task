@@ -14,6 +14,10 @@ import SignInSide from "../../components/SignIn/SignInSide"
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
+import SearchIcon from '@material-ui/icons/Search';
+import HomeIcon from '@material-ui/icons/Home';
+import IconButton from '@material-ui/core/IconButton';
+
 
 import {
   USER_QUERY,
@@ -67,10 +71,10 @@ function App() {
                 userName: user,
             }
         }
-    })
+      })
 
-      // setRegister(false);
-      // setLogging(false);
+      setRegister(false);
+      setLogging(false);
       console.log(user)
       console.log(data)
       console.log(data.user)
@@ -181,15 +185,28 @@ function App() {
         </div>
       ) : (
         <div className="App">
-          <Button onClick={tmp} >Switch</Button>
           <div>
             {loading ? (<div>Loading...</div>) : changepage ? ( 
               <div>
-                <Search />
+                <div>
+                  <Search />
+                </div>
+                <div className="switchPage">
+                  <IconButton>
+                    <HomeIcon onClick={tmp} style={{ fontSize: 50 }} />
+                  </IconButton>
+                </div>
               </div>
             ) : (
               <div>
-                <BallPool user={data.user} />
+                <div className="BallPoll__container">
+                  <BallPool user={data.user} />
+                </div>
+                {/* <div className="switchPage">
+                  <IconButton>
+                    <SearchIcon onClick={tmp} style={{ fontSize: 50 }} />
+                  </IconButton>
+                </div> */}
                 {/* <GlobalBall user={data.user} /> */}
               </div>
             )}
