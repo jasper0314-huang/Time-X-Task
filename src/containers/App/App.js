@@ -58,14 +58,14 @@ function App() {
     // event.target.parentNode.childNodes[1].value = "";
   }
 
-  const checkRegister = ({event, newValue}) => {
+  const checkRegister = async ({event, newValue}) => {
     if (user && data.user) {
       setRegister(false);
     } else if (!user) {
       alert("請填寫你的名字")
     } else {
 
-      createUser({
+      await createUser({
         variables: {
             data: {
                 userName: user,
@@ -73,14 +73,14 @@ function App() {
         }
       })
 
-      setRegister(false);
-      setLogging(false);
+      await setRegister(false);
+      await setLogging(false);
       console.log(user)
       console.log(data)
       console.log(data.user)
+      console.log(data.newUser)
 
     }
-    console.log(data.user)
     // event.target.parentNode.childNodes[1].value = "";
   }
 
