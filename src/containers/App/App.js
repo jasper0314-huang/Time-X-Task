@@ -73,10 +73,11 @@ function App() {
 
       await setRegister(false);
       await setLogging(false);
-      console.log(user)
-      console.log(data)
-      console.log(data.user)
-      console.log(data.newUser)
+      window.location.reload();
+      // console.log(user)
+      // console.log(data)
+      // console.log(data.user)
+      // console.log(data.newUser)
 
     }
     // event.target.parentNode.childNodes[1].value = "";
