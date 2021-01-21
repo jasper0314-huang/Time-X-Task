@@ -43,18 +43,31 @@ const GlobalBall = ({ user }) => {
         return ret;
     }
 
+    const data2assignments = (user) => {
+        let ret = [];
+        for (let project of user.projects) {
+            for (let assign of project.assignments) {
+                ret.push(assign)
+            }
+        }
+        return ret;
+    }
+
+    const tmp = () => {
+        console.log("nothing");
+    }
 
     return (
         <>
         <h1>{user.userName}</h1>
         <div className="outside__box">
             <div className="todolist__root">
-                {/* <TodoList
-                    userID={userID}
-                    projectID={project.id}
-                    assignments={project.assignments}
-                    timingFunc={timingFunc}
-                /> */}
+                <TodoList
+                    userID={user.id}
+                    projectID={null}
+                    assignments={data2assignments(user)}
+                    timingFunc={tmp}
+                />
             </div>
 
             <div className="inside__box">

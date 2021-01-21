@@ -171,16 +171,23 @@ const TodoList = ({ userID, projectID, assignments, timingFunc }) => {
             <div className="todo-app_box">
                 <section className="todo-app__main">
                     <div className="todo-app__input__box">
-                        <input className="todo-app__input" id="todo-input-assignment"
-                        // onKeyUp={addItem} 
-                        placeholder="What needs to be done?"></input>
-                        <form className="todo-app__form">
-                            <input className="todo-app__input" id="todo-input-deadline" readOnly={true}
-                            placeholder="(no deadline)" value={date===undefined? null : date2Human(date)}></input>
-                            <input className="todo-app__input" id="todo-input-clocktime" type="time"></input>
-                            <input type="reset" value="Reset" onClick={resetTime} ></input>
-                            <input type="button" value="Enter" onClick={addItem__button} ></input>
-                        </form>
+                        { projectID ? (
+                            <>
+                                <input className="todo-app__input" id="todo-input-assignment"
+                                // onKeyUp={addItem} 
+                                placeholder="What needs to be done?"></input>
+
+                                <form className="todo-app__form">
+                                    <input className="todo-app__input" id="todo-input-deadline" readOnly={true}
+                                    placeholder="(no deadline)" value={date===undefined? null : date2Human(date)}></input>
+                                    <input className="todo-app__input" id="todo-input-clocktime" type="time"></input>
+                                    <input type="reset" value="Reset" onClick={resetTime} ></input>
+                                    <input type="button" value="Enter" onClick={addItem__button} ></input>
+                                </form>
+                            </>
+                        ) : (
+                            <div> </div>
+                        ) }
                     </div>
                     <ul className="todo-app__list" id="todo-list">
                         {
