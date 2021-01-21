@@ -25,6 +25,22 @@ const LinkBar = ({ links, userID, projectID }) => {
         })
         linkNode.value = "";
     }
+    const deleteLink = (event) => {
+        const link = event.target.id;
+        const newlinks = links.filter((e) => (e !== link))
+
+        console.log(newlinks);
+        
+        updateProject({
+            variables: {
+                userID: userID,
+                id: projectID,
+                data: {
+                    links: newlinks
+                }
+            }
+        })
+    }
 
     return (
         <div className="linkbar__main">
@@ -34,13 +50,14 @@ const LinkBar = ({ links, userID, projectID }) => {
                 <input type="text" id="addlink" />
                 <input type="submit" value="Add" onClick={addLink} />
             </div>
-            {/* <div  */}
+            <div className="link__img">
             {
                 links.map(e => {
+                    console.log(e)
                     return (
-                        <div className="link__img">
-                            <img src={Img} alt="delete" className="delete" />
-                            <a href={e}>
+                        <div className="link__img__box">
+                            <img src={Img} alt="delete" className="delete" id={e} onClick={deleteLink} />
+                            <a href={e} rel="noreferrer" target="_blank">
                                 <img
                                     src={"https://www.google.com/s2/favicons?domain=" + e}
                                     alt="img"
@@ -50,6 +67,7 @@ const LinkBar = ({ links, userID, projectID }) => {
                     )
                 })
             }
+            </div>
         </div>
     )
 }

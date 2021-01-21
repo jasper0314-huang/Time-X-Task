@@ -196,11 +196,12 @@ const TodoList = ({ userID, projectID, assignments, timingFunc }) => {
                             assignments.filter(filterRule()).sort((a, b) => {
                                 return a.deadline? (a.deadline > b.deadline)? 1 : ((a.deadline < b.deadline)? -1 : 0) : -1;
                             }).map(e => (
-                                <div onClick={timingFunc(e.id)}>
+                                <div>
                                     <Item
                                         assignment={e}
                                         deleteItem={deleteItem}
                                         completeItem={completeItem}
+                                        timingFunc={timingFunc}
                                     />
                                 </div>
                             )) 

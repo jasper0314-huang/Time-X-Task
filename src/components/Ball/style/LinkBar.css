@@ -10,11 +10,22 @@ img {
 }
 
 .link__img {
+    display: flex;
+    flex-direction: row;
+}
+
+.link__img__box {
     position: relative;
 }
 
 .link__img .delete {
+    height: 15%;
+    width: 15%;
     position: absolute;
-    top: 0px;
-    right: 0px;
+    top: -10px;
+    right: -10px;
+}
+
+.link__img .delete:hover {
+    transform: scale(1.5);
 }
