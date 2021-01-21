@@ -23,7 +23,7 @@ const LinkBar = ({ links, userID, projectID }) => {
                 }
             }
         })
-        linkNode.value = "";
+        linkNode.value = "https://";
     }
     const deleteLink = (event) => {
         const link = event.target.id;
@@ -45,9 +45,8 @@ const LinkBar = ({ links, userID, projectID }) => {
     return (
         <div className="linkbar__main">
             <div className="link__info">
-                <h1>Links</h1>
-                <label for="adddlink">Add link: </label>
-                <input type="text" id="addlink" />
+                <h1 for="adddlink" id="addlink__text">Add link: </h1>
+                <input type="text" id="addlink" value="https://" />
                 <input type="submit" value="Add" onClick={addLink} />
             </div>
             <div className="link__img">

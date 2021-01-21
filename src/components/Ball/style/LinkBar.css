@@ -4,6 +4,13 @@ img {
     height: 50px;
 }
 
+#addlink__text {
+    margin: auto 5px;
+}
+#addlink {
+    font-size: 20px;
+}
+
 .link__info {
     display: flex;
     flex-direction: row;

@@ -7,9 +7,9 @@ const Record = require('../models/record')
 const Mutation = {
   createUser: async (_, { data }, pubSub, info) => {
     const newUser = new User({ userName: data.userName, projects: []});
-    const error = newUser.save();
+    const error = await newUser.save();
     if (error) console.log(error);
-    const result = await User.findById(newUser._id).populate({
+    const userRet = User.findById(newUser._id).populate({
       path: 'projects',
       model: 'project',
       populate: {
@@ -24,21 +24,11 @@ const Mutation = {
     pubSub.publish('user', {
       user: {
         mutation: "CREATED",
-        data: result
+        data: userRet
       }
     })
-    return newUser.populate({
-      path: 'projects',
-      model: 'project',
-      populate: {
-        path: 'assignments',
-        model: 'assignment',
-        populate: {
-          path: 'records',
-          model: 'record'
-        }
-      }
-    });
+    console.log(userRet);
+    return userRet;
   },
   deleteUser: async (_, { id }, pubSub, info) => {
     const result = await User.findById(id).populate({
