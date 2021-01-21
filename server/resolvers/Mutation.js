@@ -27,18 +27,7 @@ const Mutation = {
         data: result
       }
     })
-    return newUser.populate({
-      path: 'projects',
-      model: 'project',
-      populate: {
-        path: 'assignments',
-        model: 'assignment',
-        populate: {
-          path: 'records',
-          model: 'record'
-        }
-      }
-    });
+    return result;
   },
   deleteUser: async (_, { id }, pubSub, info) => {
     const result = await User.findById(id).populate({
