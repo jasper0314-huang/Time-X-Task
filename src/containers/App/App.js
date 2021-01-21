@@ -42,7 +42,7 @@ function App() {
   //   event.target.parentNode.childNodes[1].value = "";
   // }
 
-  const checkLogging = ({event, newValue}) => {
+  const checkLogging = () => {
     if (user && data.user) {
       setLogging(false);
     } else if (!user) {
@@ -56,7 +56,7 @@ function App() {
     // event.target.parentNode.childNodes[1].value = "";
   }
 
-  const checkRegister = async ({event, newValue}) => {
+  const checkRegister = async () => {
     if (user && data.user) {
       setRegister(false);
     } else if (!user) {
@@ -135,6 +135,11 @@ function App() {
               fullWidth
               autoFocus
               required
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  checkRegister();
+                }
+             }}
             />
             <Button
               type="submit"
@@ -169,6 +174,11 @@ function App() {
               fullWidth
               autoFocus
               required
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  checkLogging();
+                }
+             }}
             />
             <Button
               type="submit"
