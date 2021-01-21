@@ -21,8 +21,7 @@ import IconButton from '@material-ui/core/IconButton';
 import {
   USER_QUERY,
   USER_SUBSCRIPTION,
-  CREATE_USER_MUTATION,
-  DELETE_ASSIGNMENT_MUTATION
+  CREATE_USER_MUTATION
 } from '../../graphql'
 
 function App() {
