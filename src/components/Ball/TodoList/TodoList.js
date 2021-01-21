@@ -189,7 +189,7 @@ const TodoList = ({ userID, projectID, assignments, timingFunc }) => {
                             <div> </div>
                         ) }
                     </div>
-                    <ul className="todo-app__list" id="todo-list">
+                    <ul className="todo-app__list" id="todo-list" style={projectID? {height: "300px"} : {height: "350px"}} >
                         {
                             assignments.filter(filterRule()).sort((a, b) => {
                                 return a.deadline? (a.deadline > b.deadline)? 1 : ((a.deadline < b.deadline)? -1 : 0) : -1;
