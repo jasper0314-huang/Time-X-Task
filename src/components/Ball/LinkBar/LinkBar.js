@@ -5,6 +5,7 @@ import {
     UPDATE_PROJECT_MUTATION
 } from "../../../graphql"
 import "../style/LinkBar.css"
+import Img from "../img/x.png"
 
 const LinkBar = ({ links, userID, projectID }) => {
     const [updateProject] = useMutation(UPDATE_PROJECT_MUTATION);
@@ -33,14 +34,20 @@ const LinkBar = ({ links, userID, projectID }) => {
                 <input type="text" id="addlink" />
                 <input type="submit" value="Add" onClick={addLink} />
             </div>
+            {/* <div  */}
             {
                 links.map(e => {
-                    return <a href={e}>
-                        <img
-                            src={"https://www.google.com/s2/favicons?domain=" + e}
-                            alt="img"
-                        />
-                    </a>
+                    return (
+                        <div className="link__img">
+                            <img src={Img} alt="delete" className="delete" />
+                            <a href={e}>
+                                <img
+                                    src={"https://www.google.com/s2/favicons?domain=" + e}
+                                    alt="img"
+                                />
+                            </a>
+                        </div>
+                    )
                 })
             }
         </div>
