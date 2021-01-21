@@ -16,15 +16,7 @@ import 'react-calendar/dist/Calendar.css';
     {
         "id": "6006c1fc74a4fd4df4c3a7f4",
         "assignmentName": "Final Project",
-        "deadline": {
-            "day": 9,
-            "month": 10,
-            "year": 1992,
-            "hour": 0,
-            "minute": 0,
-            "second": 0,
-            "formatted": "1992-10-09T00:00:00Z"
-        },
+        "deadline": "1992-10-09T00:00:00Z,
         "record": [],
         "status": null,
         "isComplete": null
@@ -164,7 +156,7 @@ const TodoList = ({ userID, projectID, assignments, timingFunc }) => {
         return (event) => {
             let triggerIdx = pages.findIndex(e => (e.buttonName === buttonNmae));
             let newPages = JSON.parse(JSON.stringify(pages));
-            for(let i=0; i<3; ++i) newPages[i].show = false;
+            for(let i=0; i<pages.length; ++i) newPages[i].show = false;
             newPages[triggerIdx].show = true;
             setPages(newPages);
         }
@@ -201,12 +193,15 @@ const TodoList = ({ userID, projectID, assignments, timingFunc }) => {
                     </div>
                     <ul className="todo-app__list" id="todo-list">
                         {
-                            assignments.filter(filterRule()).map(e => (
-                                <div onClick={timingFunc(e.id)}>
+                            assignments.filter(filterRule()).sort((a, b) => {
+                                return a.deadline? (a.deadline > b.deadline)? 1 : ((a.deadline < b.deadline)? -1 : 0) : -1;
+                            }).map(e => (
+                                <div>
                                     <Item
                                         assignment={e}
                                         deleteItem={deleteItem}
                                         completeItem={completeItem}
+                                        timingFunc={timingFunc}
                                     />
                                 </div>
                             )) 
