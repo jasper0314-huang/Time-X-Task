@@ -91,16 +91,17 @@ const BallPool = ({ user }) => {
             name="form"
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
+            style={{fontSize: 30}}
           >
             <Form.Item
               label="project name"
               name="project_name"
               rules={[{required: true, message: 'Please input the project name' }]}
             >
-              <Input />
+              <Input style={{fontSize: 15}}/>
             </Form.Item>
             <Form.Item {...tailLayout}>
-              <Button type="primary" htmlType="submit">
+              <Button type="primary" htmlType="submit"  style={{fontSize: 15}}>
                 Add
               </Button>
             </Form.Item>
