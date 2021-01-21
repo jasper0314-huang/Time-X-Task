@@ -1,14 +1,20 @@
 import Ball from "../components/Ball/Ball"
 import React, { useState } from 'react'
+import { useMutation } from '@apollo/react-hooks'
 import { Menu } from 'antd'
 import {PlusOutlined} from '@ant-design/icons'
 import GlobalBall from "../components/Ball/GlobalBall"
-// import {  }
 
-// const { SubMenu  } = Menu;
+import {
+  CREATE_PROJECT_MUTATION
+} from '../graphql'
+
+import { Form, Input, InputNumber, Button } from 'antd';
 
 const BallPool = ({ user }) => {
   const [focusProject, setFocusProject] = useState(-1)
+  const [createProject] = useMutation(CREATE_PROJECT_MUTATION);
+
   const handleClick = e => {
     if (e.key === "global_ball") {
       setFocusProject(-1)
@@ -20,6 +26,40 @@ const BallPool = ({ user }) => {
       setFocusProject(e.key)
     }
   }
+
+  const layout = {
+    labelCol: { span: 8 },
+    wrapperCol: { span: 16 },
+  };
+
+  const tailLayout = {
+    wrapperCol: { offset: 8, span: 16 },
+  };
+
+  const onFinish = async (values) => {
+    // console.log('Success:', values);
+    // console.log(user.id);
+    // console.log(values.project_name);
+    await createProject({
+      variables: {
+        data: {
+          userID: user.id,
+          projectName: values.project_name,
+        }
+      }
+    })
+    setFocusProject(user.projects.length)
+    // console.log(user.projects);
+    // console.log(user.projects.length-1);
+
+  };
+
+  const onFinishFailed = (errorInfo) => {
+    console.log('Failed:', errorInfo);
+  };
+
+
+
   return (
     <>
       <div className="App-title">
@@ -28,7 +68,7 @@ const BallPool = ({ user }) => {
         </h1>
       </div>
       <div>
-        <Menu onClick={handleClick} selectedKeys={[focusProject]} mode="horizontal">
+        <Menu style={{fontSize: 20}} onClick={handleClick} selectedKeys={[focusProject]} mode="horizontal">
           <Menu.Item key="global_ball" icon={<PlusOutlined />}>
             ALL
           </Menu.Item>
@@ -44,12 +84,34 @@ const BallPool = ({ user }) => {
       </div>
       <div>
         {(focusProject === -1) ? (
-          <GlobalBall>
+          // <GlobalBall>
 
-          </GlobalBall>
+          // </GlobalBall>
+          <div></div>
+        ) : ( <>{ (focusProject === -2) ? (
+          <Form
+            {...layout}
+            name="form"
+            onFinish={onFinish}
+            onFinishFailed={onFinishFailed}
+          >
+            <Form.Item
+              label="project name"
+              name="project_name"
+              rules={[{required: true, message: 'Please input the project name' }]}
+            >
+              <Input />
+            </Form.Item>
+            <Form.Item {...tailLayout}>
+              <Button type="primary" htmlType="submit">
+                Add
+              </Button>
+            </Form.Item>
+          </Form>
         ) : (
           <Ball userID={user.id} project={user.projects[focusProject]} />
-        )}
+        )
+        } </>)}
       </div>
         
     </>

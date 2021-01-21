@@ -84,11 +84,24 @@ const CREATE_USER_MUTATION = gql`
   }
 `
 
+const CREATE_PROJECT_MUTATION = gql`
+  mutation createProject(
+    $data: CreateProjectInput
+  ) {
+    createProject(
+      data: $data
+    ) {
+      id
+    }
+  }
+`
+
 export {
   UPDATE_PROJECT_MUTATION,
   CREATE_ASSIGNMENT_MUTATION, 
   UPDATE_ASSIGNMENT_MUTATION,
   DELETE_ASSIGNMENT_MUTATION,
   CREATE_RECORD_MUTATION,
-  CREATE_USER_MUTATION
+  CREATE_USER_MUTATION,
+  CREATE_PROJECT_MUTATION
 }
