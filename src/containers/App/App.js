@@ -27,7 +27,7 @@ import {
 function App() {
   // var variables = { userName: "A" }
   const [user, setUser] = useState("");
-  const [changepage, setChangepage] = useState(true);
+  const [changepage, setChangepage] = useState(false);
   const [logging, setLogging] = useState(true);
   const [register, setRegister] = useState(false);
 

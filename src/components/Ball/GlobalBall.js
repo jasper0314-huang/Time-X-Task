@@ -59,7 +59,7 @@ const GlobalBall = ({ user }) => {
 
     return (
         <>
-        <h1>{user.userName}</h1>
+        <h1>ALL</h1>
         <div className="outside__box">
             <div className="todolist__root">
                 <TodoList

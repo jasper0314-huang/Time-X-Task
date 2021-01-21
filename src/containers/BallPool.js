@@ -21,7 +21,7 @@ const BallPool = ({ user }) => {
     } else if (e.key === "add_project") {
       setFocusProject(-2)
     } else if (e.key === focusProject) {
-      setFocusProject(-3) // show nothing
+      setFocusProject(-1) // show nothing
     } else {
       setFocusProject(e.key)
     }
