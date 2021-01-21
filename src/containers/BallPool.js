@@ -1,6 +1,8 @@
 import Ball from "../components/Ball/Ball"
 import React, { useState } from 'react'
 import { Menu } from 'antd'
+import {PlusOutlined} from '@ant-design/icons'
+import GlobalBall from "../components/Ball/GlobalBall"
 // import {  }
 
 // const { SubMenu  } = Menu;
@@ -8,8 +10,12 @@ import { Menu } from 'antd'
 const BallPool = ({ user }) => {
   const [focusProject, setFocusProject] = useState(-1)
   const handleClick = e => {
-    if (e.key === focusProject) {
+    if (e.key === "global_ball") {
       setFocusProject(-1)
+    } else if (e.key === "add_project") {
+      setFocusProject(-2)
+    } else if (e.key === focusProject) {
+      setFocusProject(-3) // show nothing
     } else {
       setFocusProject(e.key)
     }
@@ -23,6 +29,12 @@ const BallPool = ({ user }) => {
       </div>
       <div>
         <Menu onClick={handleClick} selectedKeys={[focusProject]} mode="horizontal">
+          <Menu.Item key="global_ball" icon={<PlusOutlined />}>
+            ALL
+          </Menu.Item>
+          <Menu.Item key="add_project" icon={<PlusOutlined />}>
+            Add
+          </Menu.Item>
           {user.projects.map( (project_i, i) => (
             <Menu.Item key={i}>
                 { project_i.projectName }
@@ -32,8 +44,9 @@ const BallPool = ({ user }) => {
       </div>
       <div>
         {(focusProject === -1) ? (
-          <div>
-          </div>
+          <GlobalBall>
+
+          </GlobalBall>
         ) : (
           <Ball userID={user.id} project={user.projects[focusProject]} />
         )}
