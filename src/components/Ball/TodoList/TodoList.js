@@ -200,6 +200,7 @@ const TodoList = ({ userID, projectID, assignments, timingFunc }) => {
                                         deleteItem={deleteItem}
                                         completeItem={completeItem}
                                         timingFunc={timingFunc}
+                                        showClock={projectID !== null}
                                     />
                                 </div>
                             )) 

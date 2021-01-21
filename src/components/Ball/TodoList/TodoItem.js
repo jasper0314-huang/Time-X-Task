@@ -22,7 +22,7 @@ import { ClockCircleOutlined, DeleteOutlined } from "@ant-design/icons"
 }
 */
 
-const todoItem = ({ assignment, deleteItem, completeItem, timingFunc }) => {
+const todoItem = ({ assignment, deleteItem, completeItem, timingFunc, showClock }) => {
     const id = assignment.id;
     const isComplete = assignment.isComplete
     const deadline_display = assignment.deadline? (new Date(assignment.deadline)).toLocaleString() : "";
@@ -37,7 +37,13 @@ const todoItem = ({ assignment, deleteItem, completeItem, timingFunc }) => {
                 <div id="item__deadline">{deadline_display}</div>
             </h3>
             {/* <ClockCircleOutlined /> */}
-            <ClockCircleOutlined className="todo-app__item-clock" id={id + "_clock"} alt="clock" onClick={timingFunc(id)} />
+            {
+                showClock? (
+                    <ClockCircleOutlined className="todo-app__item-clock" id={id + "_clock"} alt="clock" onClick={timingFunc(id)} />
+                ) : (
+                    <div></div>
+                )
+            }
             <DeleteOutlined className="todo-app__item-x" id={id + "_img"} alt="X" onClick={deleteItem(id)} />
         </li>
     );
