@@ -231,27 +231,13 @@ input[type='checkbox'] {
 .todo-app__item:hover .todo-app__item-x {
     display: inline;
     position: absolute;
-    max-width: 30px;
-    max-height: 30px;
-    right: 30px;
+    max-width: 20px;
+    max-height: 20px;
+    right: 20px;
 }
 
 .todo-app__item:hover .todo-app__item-x:hover {
-    transform: scale(1.5);
-}
-
-.todo-app__item-clock {
-    display: none;
-}
-
-.todo-app__item:hover .todo-app__item-clock {
-    display: inline;
-    position: absolute;
-    max-width: 30px;
-    max-height: 30px;
-    right: 70px;
-}
-
-.todo-app__item:hover .todo-app__item-clock:hover {
-    transform: scale(1.5);
+    max-width: 25px;
+    max-height: 25px;
+    right: 17.5px;
 }

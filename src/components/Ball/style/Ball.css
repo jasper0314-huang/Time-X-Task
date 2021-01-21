@@ -29,7 +29,7 @@
     border-style: solid;
     border-color: yellowgreen;
     height: 100%;
-    width: 40%;
+    width: 30%;
 }
 
 .linkbar__root {
@@ -37,7 +37,7 @@
     border-style: solid;
     border-color: red;
     height: 100%;
-    width: 60%;
+    width: 70%;
 }
 
 /* .react-stopwatch-timer__element {
@@ -51,23 +51,4 @@
     font-size: 30px;
     width: 300px !important;
     height: 300px !important;
-}
-
-#table-wrapper {
-    position:relative;
-}
-#table-scroll {
-    height:var(--recordlinks--height);
-    overflow:auto;  
-}
-#table-wrapper table {
-    width:100%;
-}
-#table-wrapper table thead th .text {
-    position:absolute;   
-    top:-20px;
-    z-index:2;
-    height:20px;
-    width:35%;
-    border:1px solid red;
 }
