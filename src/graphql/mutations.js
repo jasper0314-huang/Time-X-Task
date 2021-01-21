@@ -1,5 +1,21 @@
 import { gql } from 'apollo-boost'
 
+const UPDATE_PROJECT_MUTATION = gql`
+  mutation updateProject(
+    $userID: ID!
+    $id: ID!
+    $data: UpdateProjectInput
+  ) {
+    updateProject(
+      userID: $userID
+      id: $id
+      data: $data
+    ) {
+      id
+    }
+  }
+`
+
 const CREATE_ASSIGNMENT_MUTATION = gql`
   mutation createAssignment(
     $userID: ID!
@@ -56,9 +72,10 @@ const CREATE_RECORD_MUTATION = gql`
   }
 `
 
-export { 
+export {
+  UPDATE_PROJECT_MUTATION,
   CREATE_ASSIGNMENT_MUTATION, 
   UPDATE_ASSIGNMENT_MUTATION,
   DELETE_ASSIGNMENT_MUTATION,
-  CREATE_RECORD_MUTATION
+  CREATE_RECORD_MUTATION,
 }

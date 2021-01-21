@@ -132,7 +132,7 @@ const Ball = ({ userID, project }) => {
                 </div>
 
                 <div className="linkbar__root">
-                    <LinkBar links={project.links} />
+                    <LinkBar links={project.links} userID={userID} projectID={project.id} />
                 </div>
             </div>
         </div>
