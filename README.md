@@ -22,11 +22,7 @@ Demo Link：https://youtu.be/EtjaVHG-RTY<br>
 
 ## Frameworks / Packages
 ### Frontend
-react.js<br>
-apollo-graphql<br>
-react calender<br>
-material-ui<br>
-ant design
+react.js | apollo-graphql | react calender | material-ui | ant design
 
 ### Backend
 Express.js<br>
