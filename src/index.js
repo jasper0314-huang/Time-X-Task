@@ -12,14 +12,18 @@ import './index.css'
 import App from './containers/App/App'
 import * as serviceWorker from './serviceWorker'
 
+
+const hostname = '34.80.170.210'
+// const hostname = 'localhost'
+const PORT = process.env.PORT || 4200
 // Create an http link:
 const httpLink = new HttpLink({
-  uri: 'http://localhost:4200/'
+  uri: `http://${hostname}:${PORT}/`
 })
-
+console.log(PORT);
 // Create a WebSocket link:
 const wsLink = new WebSocketLink({
-  uri: `ws://localhost:4200/`,
+    uri: `ws://${hostname}:${PORT}/`,
   options: { reconnect: true }
 })
 
