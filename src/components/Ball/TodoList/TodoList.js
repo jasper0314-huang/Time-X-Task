@@ -1,7 +1,10 @@
 import { useState } from "react";
 import { useMutation } from '@apollo/react-hooks'
 import Item from "./TodoItem"
-import Button from "./TodoButton"
+// import Button from "./TodoButton"
+import { Dropdown } from "antd"
+import DisplayMenu from "./displayMenu"
+
 import "../style/TodoList.css"
 import {
     CREATE_ASSIGNMENT_MUTATION,
@@ -25,12 +28,14 @@ import 'react-calendar/dist/Calendar.css';
 */
 
 const TodoList = ({ userID, projectID, assignments, timingFunc }) => {
-    const [pages, setPages] = useState([
-        {show: true, buttonName: "All"},
-        {show: false, buttonName: "Progress"},
-        {show: false, buttonName: "Trivial"},
-        {show: false, buttonName: "Completed"},
-    ]);
+    // const [pages, setPages] = useState([
+    //     {show: true, buttonName: "All"},
+    //     {show: false, buttonName: "Progress"},
+    //     {show: false, buttonName: "Trivial"},
+    //     {show: false, buttonName: "Completed"},
+    // ]);
+    const pagesName = ["All", "Progress", "Trivial", "Completed"]
+    const [pageID, setPageID] = useState(0);
     const [date, setDate] = useState(undefined);
     const [createAssignment] = useMutation(CREATE_ASSIGNMENT_MUTATION)
     const [updateAssignment] = useMutation(UPDATE_ASSIGNMENT_MUTATION)
@@ -122,23 +127,24 @@ const TodoList = ({ userID, projectID, assignments, timingFunc }) => {
             "Trivial": e => ((!e.isComplete && e.deadline === null) && datefilter(e)),
             "Completed": e => (e.isComplete && datefilter(e)),
         }
-        for (let page of pages) {
-            if (page.show)
-                return rules[page.buttonName];
-        }
-        return e => (true);
+        // for (let page of pages) {
+        //     if (page.show)
+        //         return rules[page.buttonName];
+        // }
+        return rules[pagesName[pageID]]
+        // return e => (true);
 
     }
 
-    const changePage = (buttonNmae) => {
-        return (event) => {
-            let triggerIdx = pages.findIndex(e => (e.buttonName === buttonNmae));
-            let newPages = JSON.parse(JSON.stringify(pages));
-            for(let i=0; i<pages.length; ++i) newPages[i].show = false;
-            newPages[triggerIdx].show = true;
-            setPages(newPages);
-        }
-    }
+    // const changePage = (buttonNmae) => {
+    //     return (event) => {
+    //         let triggerIdx = pages.findIndex(e => (e.buttonName === buttonNmae));
+    //         let newPages = JSON.parse(JSON.stringify(pages));
+    //         for(let i=0; i<pages.length; ++i) newPages[i].show = false;
+    //         newPages[triggerIdx].show = true;
+    //         setPages(newPages);
+    //     }
+    // }
 
     const deleteCompleted = async (event) => {
         for (let a of assignments) {
@@ -147,11 +153,25 @@ const TodoList = ({ userID, projectID, assignments, timingFunc }) => {
         }
     }
 
+    const menuChangePage = (page_id) => {
+        return (event) => {
+            setPageID(page_id)
+        }
+    }
+
+    const menuDeleteCompleted = () => {
+        return () => {
+            deleteCompleted()
+        }
+    }
+    
+
     const resetTime = (event) => {
-        let newPages = JSON.parse(JSON.stringify(pages));
-        for(let i=0; i<pages.length; ++i) newPages[i].show = false;
-        newPages[0].show = true;
-        setPages(newPages);
+        // let newPages = JSON.parse(JSON.stringify(pages));
+        // for(let i=0; i<pages.length; ++i) newPages[i].show = false;
+        // newPages[0].show = true;
+        // setPages(newPages);
+        setPageID(0)
 
         const formChildNodes = event.target.parentNode.childNodes;
         setDate(undefined);
@@ -159,12 +179,15 @@ const TodoList = ({ userID, projectID, assignments, timingFunc }) => {
     }
 
     const calendarSetDate = (d) => {
-        let newPages = JSON.parse(JSON.stringify(pages));
-        for(let i=0; i<pages.length; ++i) newPages[i].show = false;
-        newPages[1].show = true;
-        setPages(newPages);
+        // let newPages = JSON.parse(JSON.stringify(pages));
+        // for(let i=0; i<pages.length; ++i) newPages[i].show = false;
+        // newPages[1].show = true;
+        // setPages(newPages);
+        setPageID(1)
         setDate(d);
     }
+
+
 
     return (
         <div className="todolist__main">
@@ -209,12 +232,21 @@ const TodoList = ({ userID, projectID, assignments, timingFunc }) => {
                 </section>
                     <footer className="todo-app__footer" id="todo-footer">
                         <div className="todo-app__total" id="todo-total">{assignments.length} left</div>
-                        <ul className="todo-app__view-buttons" id="todo-view">
+                        {/* <ul className="todo-app__view-buttons" id="todo-view">
                             { pages.map(e => <Button buttonName={e.buttonName} show={e.show} changePage={changePage} />) }
-                        </ul>
-                        <div className="todo-app__clean" id="clear_completed_button">
-                            <button onClick={deleteCompleted}>Clear completed</button>
-                        </div>
+                        </ul> */}
+                        <Dropdown trigger={['click']} overlay={<DisplayMenu
+                            setPageID={menuChangePage}
+                            deleteCompleted={menuDeleteCompleted}
+                        />}>
+                            {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+                            <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
+                                {pagesName[pageID]}
+                            </a>
+                        </Dropdown>
+                    {/* <div className="todo-app__clean" id="clear_completed_button">
+                        <Button onClick={deleteCompleted}>Clear completed</Button>
+                    </div> */}
                     </footer>
             </div>
             <div className="calendar__box">

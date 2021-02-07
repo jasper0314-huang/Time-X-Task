@@ -38,7 +38,7 @@ export class MyHistogram extends Component {
 			<BarSeries animated rawData={rawData} />
 			<DensitySeries animated rawData={rawData} />
 			<XAxis
-			  label="sec(s)"
+			  label="hrs"
 			  fontsize={20}
 			/>
 			<YAxis
