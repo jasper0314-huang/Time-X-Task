@@ -3,10 +3,12 @@
 ## Web Programming (Fall 2020) Final Project Group 49
 Instructor: Prof. Chung-Yang Ric Huang <br>
 Curriculum number: NTU EE3035
+
 ### Group members
 田昀曜<br>
-劉禹彤<br>
-黃啟斌
+黃啟斌<br>
+劉禹彤
+
 
 ## Project Description
 Demo Link：https://youtu.be/EtjaVHG-RTY<br>
@@ -30,21 +32,4 @@ mongoose（Mongo DB）<br>
 babel<br>
 
 資料庫：<br>
-Mongo DB<br>
-
-心得<br>
-做完後真的是滿滿的成就感！雖然離我們當初的理想還有一段距離，不過我們未來會持續的改進。然後這個服務理想上是要給很多使用者來用，人多了之後，統計查詢的功能才會比較實用。
-
-分工表：
-田昀曜：
-後端資料庫建立
-前端美工設計
-後期支援前端功能
-黃啟斌：
-前端設計（主頁面部分）
-前端美工設計
-Deploy
-劉禹彤：
-前端設計（統計、搜尋部分）
-影片錄製
-前端美工設計
+Mongo DB
