@@ -25,9 +25,7 @@ Demo Link：https://youtu.be/EtjaVHG-RTY<br>
 react.js | apollo-graphql | react calender | material-ui | ant design
 
 ### Backend
-Express.js<br>
-mongoose<br>
-graphql-yoga
+Express.js | mongoose | graphql-yoga
 
 ### Database
 Mongo DB
