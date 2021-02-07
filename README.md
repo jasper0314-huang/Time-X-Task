@@ -23,7 +23,7 @@ Demo Link：https://youtu.be/EtjaVHG-RTY<br>
 react.js<br>
 apollo-graphql<br>
 react calender<br>
-material-ui（CSS 框架）<br>
+material-ui<br>
 ant design
 
 ### Backend
