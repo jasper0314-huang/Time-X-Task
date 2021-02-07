@@ -1,13 +1,13 @@
 # Time-X-Task (TXT)
 
 ## Web Programming (Fall 2020) Final Project Group 49
-Instructor: Prof. Chung-Yang Ric Huang <br>
-Curriculum number: NTU EE3035
+{\bf Instructor}: Prof. Chung-Yang Ric Huang <br>
+{\bf Curriculum number}: NTU EE3035
 
 ### Group members
-田昀曜<br>
-黃啟斌<br>
-劉禹彤
+Eric Tien<br>
+Chi-Pin Huang<br>
+Yeu-Tong Lau
 
 
 ## Project Description
@@ -19,17 +19,17 @@ Demo Link：https://youtu.be/EtjaVHG-RTY<br>
 登入之後，可以新增課程（Project）及作業（Assignment），點擊作業旁的時間圖示可以開始計時，再點一次即停止計時。點擊左上角的搜尋圖示可以進入搜尋頁面，看在不同項目上（有下拉選單，也可自己打字搜尋），其他人花費的時間分佈。<br>
 
 ## Frameworks / Packages
-使用套件 / 框架：<br>
-前端：<br>
-react<br>
+### Frontend
+react.js<br>
+apollo-graphql<br>
 react calender<br>
 material-ui（CSS 框架）<br>
-adnt designm (icons and buttons)<br>
+ant design
 
-後端：<br>
-express<br>
-mongoose（Mongo DB）<br>
-babel<br>
+### Backend
+Express.js<br>
+mongoose<br>
+graphql-yoga
 
-資料庫：<br>
+### Database
 Mongo DB
