@@ -1,5 +1,7 @@
 # Time-X-Task (TXT)
 
+![image](https://github.com/jasper0314-huang/Time-X-Task/blob/main/demo1.gif)
+
 ## Web Programming (Fall 2020) Final Project Group 49
 Instructor: Prof. Chung-Yang Ric Huang <br>
 Curriculum number: NTU EE3035
