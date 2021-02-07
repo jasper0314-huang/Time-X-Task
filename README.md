@@ -1,16 +1,16 @@
 [109-1] Web Programming Final <br>
 (Group 49) TXT 時間管理小工具 <br>
-Deploy 連結：http://linux4.csie.ntu.edu.tw:4201<br>
+Deploy 連結：不公開<br>
 Demo 影片：https://youtu.be/EtjaVHG-RTY<br>
 
-描述這個服務在做什麼<br>
+描述這個服務在做什麼：<br>
 時間管理工具，可以記錄不同課程（Project）及其作業（Assignment）花費的時間多寡。並透過統計圖表，看其他人所花費的時間分佈，藉以評估自己的效率及時間管理結果。<br>
 
-使用/操作方式<br>
+使用/操作方式：<br>
 在 Demo 影片中有詳細說明操作流程及方式。<br>
 登入之後，可以新增課程（Project）及作業（Assignment），點擊作業旁的時間圖示可以開始計時，再點一次即停止計時。點擊左上角的搜尋圖示可以進入搜尋頁面，看在不同項目上（有下拉選單，也可自己打字搜尋），其他人花費的時間分佈。<br>
 
-使用套件 / 框架<br>
+使用套件 / 框架：<br>
 前端：<br>
 react<br>
 react calender<br>
