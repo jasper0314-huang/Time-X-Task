@@ -3,6 +3,10 @@
 ## Web Programming (Fall 2020) Final Project Group 49
 Instructor: Prof. Chung-Yang Ric Huang <br>
 Curriculum number: NTU EE3035
+### Group members
+田昀曜<br>
+劉禹彤<br>
+黃啟斌
 
 ## Project Description
 Demo Link：https://youtu.be/EtjaVHG-RTY<br>
