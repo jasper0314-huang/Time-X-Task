@@ -1,4 +1,4 @@
-[109-1] Web Programming Final <br>
+# NTU EE3035 Web Programming (Fall 2020) Final Project
 (Group 49) TXT 時間管理小工具 <br>
 Deploy 連結：不公開<br>
 Demo 影片：https://youtu.be/EtjaVHG-RTY<br>
