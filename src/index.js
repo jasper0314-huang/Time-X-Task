@@ -13,8 +13,8 @@ import App from './containers/App/App'
 import * as serviceWorker from './serviceWorker'
 
 
-const hostname = '34.80.170.210'
-// const hostname = 'localhost'
+// const hostname = '34.80.170.210'
+const hostname = 'localhost'
 const PORT = process.env.PORT || 4200
 // Create an http link:
 const httpLink = new HttpLink({
